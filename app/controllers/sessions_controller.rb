@@ -12,13 +12,20 @@ class SessionsController < ApplicationController
 
     response = oauth_access(params[:code])
 
-    slack_workspace_id = response.dig(:team_id)
-    slack_user_id = response.dig(:authorizing_user, :user_id)
-    authentication = Authentication.find_or_initialize_by(slack_workspace_id: slack_workspace_id, slack_user_id: slack_user_id)
+    authentication_params = {
+      slack_workspace_id: response.dig(:team, :id),
+      slack_user_id: response.dig(:user, :id)
+    }
+    authentication = Authentication.find_or_initialize_by(authentication_params)
 
     if authentication.new_record?
       authentication.access_token = response.dig(:access_token)
-      user = User.create_with(authentication)
+      user_params = {
+        name: response.dig(:user, :name),
+        avatar_url: response.dig(:user, :image_192)
+      }
+      user = User.create_with!(authentication, user_params)
+
       login(user)
     else
       login(authentication.user)

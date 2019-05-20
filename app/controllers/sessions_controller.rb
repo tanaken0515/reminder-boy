@@ -36,17 +36,13 @@ class SessionsController < ApplicationController
   private
 
   def oauth_access(code)
-    # todo: slack-api-client を用意する
-    # client = apiクライアントをnewする
-    # response = client.oauth_access(
-    #   {
-    #     client_id: ENV['SLACK_CLIENT_ID'],
-    #     client_secret: ENV['SLACK_API_SECRET'],
-    #     redirect_uri: callback_url,
-    #     code: code
-    #   }
-    # )
-    { team_id: 'aaaaa', authorizing_user: {user_id: 'bbbbb'}, access_token: 'ccccc' }
+    oauth_access_params = {
+      client_id: ENV['SLACK_CLIENT_ID'],
+      client_secret: ENV['SLACK_API_SECRET'],
+      redirect_uri: callback_url,
+      code: code
+    }
+    Slack::Web::Client.new.oauth_access(oauth_access_params)
   end
 
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_19_052444) do
+ActiveRecord::Schema.define(version: 2019_05_22_121527) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,28 @@ ActiveRecord::Schema.define(version: 2019_05_19_052444) do
     t.index ["user_id"], name: "index_authentications_on_user_id"
   end
 
+  create_table "reminders", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "slack_channel_id", null: false
+    t.string "icon_emoji"
+    t.string "icon_name"
+    t.string "message", null: false
+    t.integer "hour", null: false
+    t.integer "minute", null: false
+    t.boolean "holiday_included", default: false, null: false
+    t.integer "status", limit: 2, null: false
+    t.boolean "monday_enabled", default: false, null: false
+    t.boolean "tuesday_enabled", default: false, null: false
+    t.boolean "wednesday_enabled", default: false, null: false
+    t.boolean "thursday_enabled", default: false, null: false
+    t.boolean "friday_enabled", default: false, null: false
+    t.boolean "saturday_enabled", default: false, null: false
+    t.boolean "sunday_enabled", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_reminders_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "name", null: false
     t.string "avatar_url"
@@ -33,4 +55,5 @@ ActiveRecord::Schema.define(version: 2019_05_19_052444) do
   end
 
   add_foreign_key "authentications", "users"
+  add_foreign_key "reminders", "users"
 end

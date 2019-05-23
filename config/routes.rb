@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  get 'reminders/index'
+  get '/reminders', to: 'reminders#index'
   get 'reminders/new'
   get 'reminders/show'
   get 'reminders/edit'

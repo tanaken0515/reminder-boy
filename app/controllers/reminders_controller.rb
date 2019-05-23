@@ -3,6 +3,7 @@ class RemindersController < ApplicationController
   end
 
   def new
+    @reminder = current_user.reminders.new
   end
 
   def show

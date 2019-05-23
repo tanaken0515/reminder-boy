@@ -1,4 +1,6 @@
 class SessionsController < ApplicationController
+  skip_before_action :login_required
+
   def new
     @authorize_url = Authentication.authorize_url(callback_url)
   end

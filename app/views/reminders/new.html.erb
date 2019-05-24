@@ -3,7 +3,7 @@
 <%= form_with(model: @reminder, local: true) do |f| %>
   <p>
     <%= f.label :slack_channel_id %>
-    <%= f.select :slack_channel_id, ['a', 'b', 'c'] %>
+    <%= f.select :slack_channel_id, @slack_channel_list, include_blank: true %>
   </p>
   <p>
     <%= f.label :icon_emoji %>

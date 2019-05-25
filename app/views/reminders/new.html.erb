@@ -1,5 +1,14 @@
 <h1>New Reminder</h1>
 <p>Find me in app/views/reminders/new.html.erb</p>
+
+<% if @reminder.errors.present? %>
+  <ul>
+    <% @reminder.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+<% end %>
+
 <%= form_with(model: @reminder, local: true) do |f| %>
   <p>
     <%= f.label :slack_channel_id %>

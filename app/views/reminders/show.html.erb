@@ -1,2 +1,48 @@
-<h1>Reminders#show</h1>
-<p>Find me in app/views/reminders/show.html.erb</p>
+<h1>Reminder Detail</h1>
+
+<%= link_to '<- Reminders List', reminders_path %>
+
+<table>
+  <tbody>
+  <tr>
+    <th>#id</th>
+    <td><%= link_to "##{@reminder.id}", reminder_path(@reminder) %></td>
+  </tr>
+  <tr>
+    <th>曜日</th>
+    <td><%= day_of_week(@reminder) %></td>
+  </tr>
+  <tr>
+    <th>時刻</th>
+    <td><%= format("%02d:%02d", @reminder.hour, @reminder.minute) %></td>
+  </tr>
+  <tr>
+    <th>通知先チャンネル</th>
+    <td><%= @reminder.slack_channel_id %></td>
+  </tr>
+  <tr>
+    <th>アイコン</th>
+    <td><%= "#{@reminder.icon_emoji} #{@reminder.icon_name}" %></td>
+  </tr>
+  <tr>
+    <th>メッセージ</th>
+    <td><%= @reminder.message %></td>
+  </tr>
+  <tr>
+    <th>祝日の通知</th>
+    <td><%= @reminder.holiday_included? ? '通知する' : '通知しない' %></td>
+  </tr>
+  <tr>
+    <th>ステータス</th>
+    <td><%= @reminder.status == 0 ? 'active' : 'deactive' %></td>
+  </tr>
+  <tr>
+    <th>作成日時</th>
+    <td><%= @reminder.created_at %></td>
+  </tr>
+  <tr>
+    <th>更新日時</th>
+    <td><%= @reminder.updated_at %></td>
+  </tr>
+  </tbody>
+</table>

@@ -1,7 +1,10 @@
 class RemindersController < ApplicationController
+  include RemindersHelper
+
   before_action :set_slack_channel_list, only: [:new, :create]
 
   def index
+    @reminders = current_user.reminders
   end
 
   def new

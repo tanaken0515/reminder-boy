@@ -1,2 +1,32 @@
-<h1>Reminders#index</h1>
-<p>Find me in app/views/reminders/index.html.erb</p>
+<h1>Reminders</h1>
+
+<table>
+  <thead>
+  <tr>
+    <th>#id</th>
+    <th>曜日</th>
+    <th>時刻</th>
+    <th>通知先チャンネル</th>
+    <th>アイコン</th>
+    <th>メッセージ</th>
+    <th>祝日の通知</th>
+    <th>ステータス</th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @reminders.each do |reminder| %>
+  <tr>
+    <td><%= link_to "##{reminder.id}", reminder_path(reminder) %></td>
+    <td><%= day_of_week(reminder) %></td>
+    <td><%= format("%02d:%02d", reminder.hour, reminder.minute) %></td>
+    <td><%= reminder.slack_channel_id %></td>
+    <td><%= "#{reminder.icon_emoji} #{reminder.icon_name}" %></td>
+    <td><%= reminder.message %></td>
+    <td><%= reminder.holiday_included? ? '通知する' : '通知しない' %></td>
+    <td><%= reminder.status == 0 ? 'active' : 'deactive' %></td>
+    <td><%= link_to '編集', edit_reminder_path(reminder) %></td>
+  </tr>
+  <% end %>
+  </tbody>
+</table>

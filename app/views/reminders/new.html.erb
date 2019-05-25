@@ -24,24 +24,24 @@
     <%= f.number_field :minute %>
   </p>
   <p>
-    <%= f.label :holiday_included %>
     <%= f.check_box :holiday_included %>
+    <%= f.label :holiday_included %>
   </p>
   <p>
-    <%= f.label :monday_enabled %>
     <%= f.check_box :monday_enabled %>
-    <%= f.label :tuesday_enabled %>
+    <%= f.label :monday_enabled %>
     <%= f.check_box :tuesday_enabled %>
-    <%= f.label :wednesday_enabled %>
+    <%= f.label :tuesday_enabled %>
     <%= f.check_box :wednesday_enabled %>
-    <%= f.label :thursday_enabled %>
+    <%= f.label :wednesday_enabled %>
     <%= f.check_box :thursday_enabled %>
-    <%= f.label :friday_enabled %>
+    <%= f.label :thursday_enabled %>
     <%= f.check_box :friday_enabled %>
-    <%= f.label :saturday_enabled %>
+    <%= f.label :friday_enabled %>
     <%= f.check_box :saturday_enabled %>
-    <%= f.label :sunday_enabled %>
+    <%= f.label :saturday_enabled %>
     <%= f.check_box :sunday_enabled %>
+    <%= f.label :sunday_enabled %>
   </p>
   <%= f.submit %>
 <% end %>

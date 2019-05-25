@@ -1,5 +1,7 @@
 <h1>Reminders</h1>
 
+<%= link_to '-> New Reminder', new_reminder_path %>
+
 <table>
   <thead>
   <tr>
@@ -25,7 +27,7 @@
     <td><%= reminder.message %></td>
     <td><%= reminder.holiday_included? ? '通知する' : '通知しない' %></td>
     <td><%= reminder.status == 0 ? 'active' : 'deactive' %></td>
-    <td><%= link_to '編集', edit_reminder_path(reminder) %></td>
+    <td><%= link_to '-> Edit', edit_reminder_path(reminder) %></td>
   </tr>
   <% end %>
   </tbody>

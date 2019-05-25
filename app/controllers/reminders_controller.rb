@@ -42,7 +42,7 @@ class RemindersController < ApplicationController
 
   def reminder_params
     param_keys = [:slack_channel_id, :icon_emoji, :icon_name,
-                  :message, :hour, :minute, :holiday_included,
+                  :message, :hour, :minute, :holiday_included, :status,
                   :monday_enabled, :tuesday_enabled, :wednesday_enabled,
                   :thursday_enabled, :friday_enabled, :saturday_enabled, :sunday_enabled]
     params.require(:reminder).permit(param_keys)

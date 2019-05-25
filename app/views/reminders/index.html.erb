@@ -26,7 +26,7 @@
     <td><%= "#{reminder.icon_emoji} #{reminder.icon_name}" %></td>
     <td><%= reminder.message %></td>
     <td><%= reminder.holiday_included? ? '通知する' : '通知しない' %></td>
-    <td><%= reminder.status == 0 ? 'active' : 'deactive' %></td>
+    <td><%= reminder.status %></td>
     <td><%= link_to '-> Edit', edit_reminder_path(reminder) %></td>
   </tr>
   <% end %>

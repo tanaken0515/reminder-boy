@@ -1,4 +1,6 @@
 class Reminder < ApplicationRecord
+  extend Enumerize
+
   belongs_to :user
 
   validates :slack_channel_id, presence: true
@@ -7,9 +9,8 @@ class Reminder < ApplicationRecord
             numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 23}
   validates :minute,
             numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 59}
-  validates :status, presence: true
-
-  before_validation :set_default
+  enumerize :status, in: { activated: 0, deactivated: 1, archived: 2 },
+            default: :activated, predicates: true, scope: true
 
   def enabled_day_of_weeks
     day_of_weeks = %i(monday tuesday wednesday thursday friday saturday sunday)
@@ -28,11 +29,5 @@ class Reminder < ApplicationRecord
   def holiday?
     # 休日の定義はuserごとに違うはず -> 要望が来たら対応する
     enabled_day_of_weeks == %i(saturday sunday)
-  end
-
-  private
-
-  def set_default
-    self.status ||= 0 #todo: Enumerizeで良い感じにする
   end
 end

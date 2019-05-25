@@ -49,5 +49,11 @@
     <%= f.check_box :sunday_enabled %>
     <%= f.label :sunday_enabled %>
   </p>
+  <% unless reminder.new_record? %>
+    <p>
+      <%= f.label :status %>
+      <%= f.select :status, Reminder.status.values %>
+    </p>
+  <% end %>
   <%= f.submit %>
 <% end %>

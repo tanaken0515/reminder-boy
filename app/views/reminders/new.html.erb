@@ -1,0 +1,56 @@
+<h1>New Reminder</h1>
+<p>Find me in app/views/reminders/new.html.erb</p>
+
+<% if @reminder.errors.present? %>
+  <ul>
+    <% @reminder.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<%= form_with(model: @reminder, local: true) do |f| %>
+  <p>
+    <%= f.label :slack_channel_id %>
+    <%= f.select :slack_channel_id, @slack_channel_list, include_blank: true %>
+  </p>
+  <p>
+    <%= f.label :icon_emoji %>
+    <%= f.text_field :icon_emoji %>
+  </p>
+  <p>
+    <%= f.label :icon_name %>
+    <%= f.text_field :icon_name %>
+  </p>
+  <p>
+    <%= f.label :message %>
+    <%= f.text_area :message %>
+  </p>
+  <p>
+    <%= f.label :hour %>
+    <%= f.number_field :hour %>
+    <%= f.label :minute %>
+    <%= f.number_field :minute %>
+  </p>
+  <p>
+    <%= f.check_box :holiday_included %>
+    <%= f.label :holiday_included %>
+  </p>
+  <p>
+    <%= f.check_box :monday_enabled %>
+    <%= f.label :monday_enabled %>
+    <%= f.check_box :tuesday_enabled %>
+    <%= f.label :tuesday_enabled %>
+    <%= f.check_box :wednesday_enabled %>
+    <%= f.label :wednesday_enabled %>
+    <%= f.check_box :thursday_enabled %>
+    <%= f.label :thursday_enabled %>
+    <%= f.check_box :friday_enabled %>
+    <%= f.label :friday_enabled %>
+    <%= f.check_box :saturday_enabled %>
+    <%= f.label :saturday_enabled %>
+    <%= f.check_box :sunday_enabled %>
+    <%= f.label :sunday_enabled %>
+  </p>
+  <%= f.submit %>
+<% end %>

@@ -1,2 +1,4 @@
 <h1>Reminders#edit</h1>
-<p>Find me in app/views/reminders/edit.html.erb</p>
+<%= link_to '<- Reminders List', reminders_path %>
+
+<%= render partial: 'reminder_form', locals: { reminder: @reminder, slack_channel_list: @slack_channel_list } %>

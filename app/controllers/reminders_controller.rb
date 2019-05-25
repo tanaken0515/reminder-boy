@@ -23,6 +23,7 @@ class RemindersController < ApplicationController
   end
 
   def show
+    @reminder = current_user.reminders.find(params[:id])
   end
 
   def edit

@@ -26,4 +26,8 @@ module RemindersHelper
       v.is_archived ? nil : [v.name, v.id]
     end.compact
   end
+
+  def slack_emoji_list
+    current_user.slack_emoji_list.map {|k, v| k} #todo: 画像urlを使って良い感じにする
+  end
 end

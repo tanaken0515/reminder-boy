@@ -25,8 +25,23 @@ class User < ApplicationRecord
     # ワークスペースごとにcacheする
     key = "slack_channel_list/#{authentication.slack_workspace_id}"
     Rails.cache.fetch(key, expires_in: 1.hours) do
-      response = Slack::Web::Client.new(token: authentication.access_token).conversations_list(types: 'public_channel')
+      response = slack_client(authentication.access_token).conversations_list(types: 'public_channel')
       response.ok ? response.channels.index_by(&:id) : {}
     end
+  end
+
+  def slack_emoji_list
+    authentication = authentications.last
+
+    # ワークスペースごとにcacheする
+    key = "slack_emoji_list/#{authentication.slack_workspace_id}"
+    Rails.cache.fetch(key, expires_in: 1.hours) do
+      response = slack_client(authentication.access_token).emoji_list
+      response.ok ? response.emoji : {}
+    end
+  end
+
+  def slack_client(access_token)
+    @client = Slack::Web::Client.new(token: access_token)
   end
 end

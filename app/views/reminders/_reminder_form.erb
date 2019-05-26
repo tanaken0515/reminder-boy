@@ -7,53 +7,54 @@
 <% end %>
 
 <%= form_with(model: reminder, local: true) do |f| %>
-  <p>
-    <%= f.label :slack_channel_id %>
-    <%= f.select :slack_channel_id, slack_channel_list, include_blank: true %>
-  </p>
-  <p>
-    <%= f.label :icon_emoji %>
-    <%= f.text_field :icon_emoji %>
-  </p>
-  <p>
-    <%= f.label :icon_name %>
-    <%= f.text_field :icon_name %>
-  </p>
-  <p>
-    <%= f.label :message %>
-    <%= f.text_area :message %>
-  </p>
-  <p>
-    <%= f.label :hour %>
-    <%= f.number_field :hour %>
-    <%= f.label :minute %>
-    <%= f.number_field :minute %>
-  </p>
-  <p>
-    <%= f.check_box :holiday_included %>
-    <%= f.label :holiday_included %>
-  </p>
-  <p>
-    <%= f.check_box :monday_enabled %>
-    <%= f.label :monday_enabled %>
-    <%= f.check_box :tuesday_enabled %>
-    <%= f.label :tuesday_enabled %>
-    <%= f.check_box :wednesday_enabled %>
-    <%= f.label :wednesday_enabled %>
-    <%= f.check_box :thursday_enabled %>
-    <%= f.label :thursday_enabled %>
-    <%= f.check_box :friday_enabled %>
-    <%= f.label :friday_enabled %>
-    <%= f.check_box :saturday_enabled %>
-    <%= f.label :saturday_enabled %>
-    <%= f.check_box :sunday_enabled %>
-    <%= f.label :sunday_enabled %>
-  </p>
-  <% unless reminder.new_record? %>
-    <p>
-      <%= f.label :status %>
-      <%= f.select :status, Reminder.status.values %>
-    </p>
-  <% end %>
+  <table>
+    <tbody>
+    <tr>
+      <th>曜日</th>
+      <td>
+        <%= f.check_box :monday_enabled %>
+        <%= f.label :monday_enabled, '月' %>
+        <%= f.check_box :tuesday_enabled %>
+        <%= f.label :tuesday_enabled, '火' %>
+        <%= f.check_box :wednesday_enabled %>
+        <%= f.label :wednesday_enabled, '水' %>
+        <%= f.check_box :thursday_enabled %>
+        <%= f.label :thursday_enabled, '木' %>
+        <%= f.check_box :friday_enabled %>
+        <%= f.label :friday_enabled, '金' %>
+        <%= f.check_box :saturday_enabled %>
+        <%= f.label :saturday_enabled, '土' %>
+        <%= f.check_box :sunday_enabled %>
+        <%= f.label :sunday_enabled, '日' %>
+      </td>
+    </tr>
+    <tr>
+      <th>時刻</th>
+      <td><%= f.number_field :hour %>:<%= f.number_field :minute %></td>
+    </tr>
+    <tr>
+      <th><%= f.label :slack_channel_id, '通知先チャンネル' %></th>
+      <td><%= f.select :slack_channel_id, slack_channel_list, include_blank: true %></td>
+    </tr>
+    <tr>
+      <th>アイコン</th>
+      <td><%= f.text_field :icon_emoji %> <%= f.text_field :icon_name %></td>
+    </tr>
+    <tr>
+      <th><%= f.label :message, 'メッセージ' %></th>
+      <td><%= f.text_area :message %></td>
+    </tr>
+    <tr>
+      <th><%= f.label :holiday_included, '祝日の通知' %></th>
+      <td><%= f.check_box :holiday_included %></td>
+    </tr>
+    <% unless reminder.new_record? %>
+      <tr>
+        <th><%= f.label :status, 'ステータス' %></th>
+        <td><%= f.select :status, Reminder.status.values %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
   <%= f.submit %>
 <% end %>

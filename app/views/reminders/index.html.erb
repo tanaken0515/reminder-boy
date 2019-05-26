@@ -4,7 +4,6 @@
 <table>
   <thead>
   <tr>
-    <th>#id</th>
     <th>曜日</th>
     <th>時刻</th>
     <th>通知先チャンネル</th>
@@ -18,7 +17,6 @@
   <tbody>
   <% @reminders.each do |reminder| %>
   <tr>
-    <td><%= link_to "##{reminder.id}", reminder_path(reminder) %></td>
     <td><%= day_of_week(reminder) %></td>
     <td><%= format("%02d:%02d", reminder.hour, reminder.minute) %></td>
     <td><%= reminder.slack_channel_id %></td>
@@ -26,7 +24,7 @@
     <td><%= reminder.message %></td>
     <td><%= reminder.holiday_included? ? '通知する' : '通知しない' %></td>
     <td><%= reminder.status %></td>
-    <td><%= link_to '-> Edit', edit_reminder_path(reminder) %></td>
+    <td><%= link_to "-> Detail", reminder_path(reminder) %> <%= link_to '-> Edit', edit_reminder_path(reminder) %></td>
   </tr>
   <% end %>
   </tbody>

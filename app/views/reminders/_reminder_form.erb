@@ -38,7 +38,9 @@
     </tr>
     <tr>
       <th>アイコン</th>
-      <td><%= f.text_field :icon_emoji %> <%= f.text_field :icon_name %></td>
+      <td>
+        <%= f.select :icon_emoji, slack_emoji_list, include_blank: true %> <%= f.text_field :icon_name %>
+      </td>
     </tr>
     <tr>
       <th><%= f.label :message, 'メッセージ' %></th>

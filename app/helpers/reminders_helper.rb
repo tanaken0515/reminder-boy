@@ -22,6 +22,8 @@ module RemindersHelper
   end
 
   def active_slack_channel_list
-    current_user.slack_channel_list.map{|key, slack_channel| [slack_channel.name, slack_channel.id]} #todo: is_archived=falseだけに絞る
+    current_user.slack_channel_list.map do |k, v|
+      v.is_archived ? nil : [v.name, v.id]
+    end.compact
   end
 end

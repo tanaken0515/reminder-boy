@@ -1,6 +1,6 @@
-<h1>ログイン</h1>
+<h2>Login</h2>
 <% if visitor? %>
   <%= link_to image_tag('https://platform.slack-edge.com/img/sign_in_with_slack.png', alt: 'Add to Slack'), @authorize_url %>
 <% else %>
-  ログイン済みです <%= link_to 'ログアウトする', logout_path, method: :delete %>
+  You are already logged in. <%= link_to 'Logout', logout_path, method: :delete %>
 <% end %>

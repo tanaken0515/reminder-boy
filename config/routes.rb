@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   get '/callback', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
 
-  root to: 'sessions#new'
+  root to: 'reminders#index'
 
   resources :reminders
 end

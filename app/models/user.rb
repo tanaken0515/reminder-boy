@@ -18,4 +18,15 @@ class User < ApplicationRecord
       user
     end
   end
+
+  def slack_channel_list
+    authentication = authentications.last
+
+    # ワークスペースごとにcacheする
+    key = "slack_channel_list/#{authentication.slack_workspace_id}"
+    Rails.cache.fetch(key, expires_in: 1.hours) do
+      response = Slack::Web::Client.new(token: authentication.access_token).conversations_list(types: 'public_channel')
+      response.ok ? response.channels.index_by(&:id) : {}
+    end
+  end
 end

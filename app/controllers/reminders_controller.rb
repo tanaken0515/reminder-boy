@@ -1,7 +1,6 @@
 class RemindersController < ApplicationController
   include RemindersHelper
 
-  before_action :set_slack_channel_list, only: [:new, :edit]
   before_action :set_reminder, only: [:show, :edit, :update]
 
   def index
@@ -18,7 +17,6 @@ class RemindersController < ApplicationController
     if @reminder.save
       redirect_to reminders_path
     else
-      set_slack_channel_list
       render :new
     end
   end
@@ -33,7 +31,6 @@ class RemindersController < ApplicationController
     if @reminder.update(reminder_params)
       redirect_to reminder_path(@reminder)
     else
-      set_slack_channel_list
       render :edit
     end
   end
@@ -46,10 +43,6 @@ class RemindersController < ApplicationController
                   :monday_enabled, :tuesday_enabled, :wednesday_enabled,
                   :thursday_enabled, :friday_enabled, :saturday_enabled, :sunday_enabled]
     params.require(:reminder).permit(param_keys)
-  end
-
-  def set_slack_channel_list
-    @slack_channel_list = [%w(ch1_name ch1_id), %w(ch2_name ch2_id), %w(ch3_name ch3_id)] #todo: apiで取ってくる
   end
 
   def set_reminder

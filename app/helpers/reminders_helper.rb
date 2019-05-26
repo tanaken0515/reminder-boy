@@ -15,4 +15,15 @@ module RemindersHelper
     }
     reminder.enabled_day_of_weeks.map { |dow| dictionary[dow] }.join(',')
   end
+
+  def slack_channel_name(reminder)
+    slack_channel = current_user.slack_channel_list[reminder.slack_channel_id]
+    slack_channel ? slack_channel.name : ''
+  end
+
+  def active_slack_channel_list
+    current_user.slack_channel_list.map do |k, v|
+      v.is_archived ? nil : [v.name, v.id]
+    end.compact
+  end
 end

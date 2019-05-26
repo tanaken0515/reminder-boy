@@ -13,4 +13,17 @@ class Authentication < ApplicationRecord
     }
     "https://slack.com/oauth/authorize?#{params.to_query}"
   end
+
+  def update_access_token!(new_access_token)
+    if access_token != new_access_token
+      begin
+        Slack::Web::Client.new(token: access_token).auth_revoke
+        Rails.logger.info "[completed] to revoke access token. authentication_id=#{id}"
+      rescue => e
+        Rails.logger.error "[failed] to revoke access token. authentication_id=#{id}"
+        Rails.logger.error e
+      end
+      update!(access_token: new_access_token)
+    end
+  end
 end

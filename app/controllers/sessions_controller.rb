@@ -27,7 +27,7 @@ class SessionsController < ApplicationController
 
       login(user)
     else
-      authentication.update!(access_token: access_token)
+      authentication.update_access_token!(access_token)
 
       login(authentication.user)
     end

@@ -49,7 +49,7 @@ class RemindersController < ApplicationController
   end
 
   def set_slack_channel_list
-    @slack_channel_list = [%w(ch1_name ch1_id), %w(ch2_name ch2_id), %w(ch3_name ch3_id)] #todo: apiで取ってくる
+    @slack_channel_list = current_user.slack_channel_list
   end
 
   def set_reminder

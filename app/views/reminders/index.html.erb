@@ -19,7 +19,7 @@
   <tr>
     <td><%= day_of_week(reminder) %></td>
     <td><%= format("%02d:%02d", reminder.hour, reminder.minute) %></td>
-    <td><%= reminder.slack_channel_id %></td>
+    <td><%= slack_channel_name(reminder) %></td>
     <td><%= "#{reminder.icon_emoji} #{reminder.icon_name}" %></td>
     <td><%= reminder.message %></td>
     <td><%= reminder.holiday_included? ? '通知する' : '通知しない' %></td>

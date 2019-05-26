@@ -34,7 +34,7 @@
     </tr>
     <tr>
       <th><%= f.label :slack_channel_id, '通知先チャンネル' %></th>
-      <td><%= f.select :slack_channel_id, slack_channel_list, include_blank: true %></td>
+      <td><%= f.select :slack_channel_id, active_slack_channel_list, include_blank: true %></td>
     </tr>
     <tr>
       <th>アイコン</th>

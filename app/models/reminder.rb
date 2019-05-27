@@ -30,4 +30,15 @@ class Reminder < ApplicationRecord
     # 休日の定義はuserごとに違うはず -> 要望が来たら対応する
     enabled_day_of_weeks == %i(saturday sunday)
   end
+
+  def post
+    params = {
+      channel: slack_channel_id,
+      text: message,
+      as_user: false,
+      icon_emoji: ":#{icon_emoji}:",
+      username: icon_name
+    }
+    user.slack_client.chat_postMessage(params)
+  end
 end

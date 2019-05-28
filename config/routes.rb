@@ -5,5 +5,9 @@ Rails.application.routes.draw do
 
   root to: 'reminders#index'
 
-  resources :reminders
+  resources :reminders do
+    member do
+      put 'post_message', to: 'reminders#post_message'
+    end
+  end
 end

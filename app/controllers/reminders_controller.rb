@@ -1,7 +1,7 @@
 class RemindersController < ApplicationController
   include RemindersHelper
 
-  before_action :set_reminder, only: [:show, :edit, :update]
+  before_action :set_reminder, only: [:show, :edit, :update, :post_message]
 
   def index
     @reminders = current_user.reminders
@@ -33,6 +33,11 @@ class RemindersController < ApplicationController
     else
       render :edit
     end
+  end
+
+  def post_message
+    @reminder.post
+    head :no_content
   end
 
   private

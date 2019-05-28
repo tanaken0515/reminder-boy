@@ -7,7 +7,7 @@ class Authentication < ApplicationRecord
 
   def self.authorize_url(callback_url)
     params = {
-      scope: 'channels:read,emoji:read,chat:write:user',
+      scope: 'channels:read,emoji:read,chat:write:bot',
       client_id: ENV['SLACK_CLIENT_ID'],
       redirect_uri: callback_url
     }

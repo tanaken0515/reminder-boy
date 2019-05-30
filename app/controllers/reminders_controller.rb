@@ -36,8 +36,7 @@ class RemindersController < ApplicationController
   end
 
   def post_message
-    @reminder.post
-    head :no_content
+    render json: @reminder.post
   end
 
   private

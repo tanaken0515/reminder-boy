@@ -40,7 +40,12 @@ class Reminder < ApplicationRecord
       icon_emoji: ":#{icon_emoji}:",
       username: icon_name
     }
-    user.slack_client.chat_postMessage(params)
+    begin
+      user.slack_client.chat_postMessage(params)
+    rescue => e
+      Rails.logger.error e.message
+      {ok: false, error: e.message}
+    end
   end
 
   def remind!

@@ -2,6 +2,7 @@ class Reminder < ApplicationRecord
   extend Enumerize
 
   belongs_to :user
+  has_many :reminder_logs
 
   validates :slack_channel_id, presence: true
   validates :message, presence: true
@@ -39,6 +40,23 @@ class Reminder < ApplicationRecord
       icon_emoji: ":#{icon_emoji}:",
       username: icon_name
     }
-    user.slack_client.chat_postMessage(params)
+    begin
+      user.slack_client.chat_postMessage(params)
+    rescue => e
+      Rails.logger.error e.message
+      {ok: false, error: e.message}
+    end
+  end
+
+  def remind!
+    response = post
+    params = {
+      slack_channel_id: slack_channel_id,
+      message: message,
+      icon_emoji: icon_emoji,
+      icon_name: icon_name,
+      slack_message_ts: response.ts
+    }
+    reminder_logs.create!(params)
   end
 end

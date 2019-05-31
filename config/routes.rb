@@ -10,4 +10,6 @@ Rails.application.routes.draw do
       put 'post_message', to: 'reminders#post_message'
     end
   end
+
+  resources :reminder_logs, only: [:index]
 end

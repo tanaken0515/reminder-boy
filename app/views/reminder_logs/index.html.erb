@@ -1,0 +1,24 @@
+<h2>ReminderLogs</h2>
+
+<table>
+  <thead>
+  <tr>
+    <th>通知日時</th>
+    <th>通知先チャンネル</th>
+    <th>アイコン</th>
+    <th>メッセージ</th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @reminder_logs.each do |reminder_log| %>
+    <tr>
+      <td><%= reminder_log.created_at %></td>
+      <td><%= slack_channel_name(reminder_log) %></td>
+      <td><%= "#{reminder_log.icon_emoji} #{reminder_log.icon_name}" %></td>
+      <td><%= reminder_log.message %></td>
+      <td><%= link_to "-> Slack", "#" %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

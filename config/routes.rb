@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'reminder_logs/index'
   get '/login', to: 'sessions#new'
   get '/callback', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'

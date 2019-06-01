@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   has_many :authentications
   has_many :reminders
-  has_many :reminder_logs, through: :reminders
+  has_many :remind_logs, through: :reminders
 
   validates :name, presence: true
 

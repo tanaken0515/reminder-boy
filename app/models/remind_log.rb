@@ -1,4 +1,4 @@
-class ReminderLog < ApplicationRecord
+class RemindLog < ApplicationRecord
   belongs_to :reminder
 
   validates :slack_channel_id, presence: true

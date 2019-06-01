@@ -14,4 +14,9 @@
 //= require activestorage
 //= require turbolinks
 //= require_tree .
+//= require jquery
 //= require materialize
+
+$(document).ready(function(){
+  $('select').formSelect();
+});

@@ -44,7 +44,10 @@
     </tr>
     <tr>
       <th>時刻</th>
-      <td><%= f.number_field :hour %>:<%= f.number_field :minute %></td>
+      <td>
+        <div class="input-field col s2"><%= f.select :hour, (0..23).to_a %><label>hour</label></div>
+        <div class="input-field col s2"><%= f.select :minute, (0..59).step(5).to_a %><label>minute</label></div>
+      </td>
     </tr>
     <tr>
       <th>通知先チャンネル</th>

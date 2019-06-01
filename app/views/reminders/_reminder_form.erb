@@ -12,20 +12,34 @@
     <tr>
       <th>曜日</th>
       <td>
-        <%= f.check_box :monday_enabled %>
-        <%= f.label :monday_enabled, '月' %>
-        <%= f.check_box :tuesday_enabled %>
-        <%= f.label :tuesday_enabled, '火' %>
-        <%= f.check_box :wednesday_enabled %>
-        <%= f.label :wednesday_enabled, '水' %>
-        <%= f.check_box :thursday_enabled %>
-        <%= f.label :thursday_enabled, '木' %>
-        <%= f.check_box :friday_enabled %>
-        <%= f.label :friday_enabled, '金' %>
-        <%= f.check_box :saturday_enabled %>
-        <%= f.label :saturday_enabled, '土' %>
-        <%= f.check_box :sunday_enabled %>
-        <%= f.label :sunday_enabled, '日' %>
+        <label for="reminder_monday_enabled">
+          <%= f.check_box :monday_enabled %>
+          <span>月</span>
+        </label>&nbsp;&nbsp;
+        <label for="reminder_tuesday_enabled">
+          <%= f.check_box :tuesday_enabled %>
+          <span>火</span>
+        </label>&nbsp;&nbsp;
+        <label for="reminder_wednesday_enabled">
+          <%= f.check_box :wednesday_enabled %>
+          <span>水</span>
+        </label>&nbsp;&nbsp;
+        <label for="reminder_thursday_enabled">
+          <%= f.check_box :thursday_enabled %>
+          <span>木</span>
+        </label>&nbsp;&nbsp;
+        <label for="reminder_friday_enabled">
+          <%= f.check_box :friday_enabled %>
+          <span>金</span>
+        </label>&nbsp;&nbsp;
+        <label for="reminder_saturday_enabled">
+          <%= f.check_box :saturday_enabled %>
+          <span>土</span>
+        </label>&nbsp;&nbsp;
+        <label for="reminder_sunday_enabled">
+          <%= f.check_box :sunday_enabled %>
+          <span>日</span>
+        </label>
       </td>
     </tr>
     <tr>
@@ -33,7 +47,7 @@
       <td><%= f.number_field :hour %>:<%= f.number_field :minute %></td>
     </tr>
     <tr>
-      <th><%= f.label :slack_channel_id, '通知先チャンネル' %></th>
+      <th>通知先チャンネル</th>
       <td><%= f.select :slack_channel_id, active_slack_channel_list, include_blank: true %></td>
     </tr>
     <tr>
@@ -43,16 +57,21 @@
       </td>
     </tr>
     <tr>
-      <th><%= f.label :message, 'メッセージ' %></th>
+      <th>メッセージ</th>
       <td><%= f.text_area :message %></td>
     </tr>
     <tr>
-      <th><%= f.label :holiday_included, '祝日の通知' %></th>
-      <td><%= f.check_box :holiday_included %></td>
+      <th>祝日の通知</th>
+      <td>
+        <label for="reminder_holiday_included">
+          <%= f.check_box :holiday_included %>
+          <span>通知する</span>
+        </label>
+      </td>
     </tr>
     <% unless reminder.new_record? %>
       <tr>
-        <th><%= f.label :status, 'ステータス' %></th>
+        <th>ステータス</th>
         <td><%= f.select :status, Reminder.status.values %></td>
       </tr>
     <% end %>

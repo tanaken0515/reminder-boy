@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_01_001034) do
+ActiveRecord::Schema.define(version: 2019_06_01_005510) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 2019_06_01_001034) do
     t.index ["user_id"], name: "index_authentications_on_user_id"
   end
 
-  create_table "reminder_logs", force: :cascade do |t|
+  create_table "remind_logs", force: :cascade do |t|
     t.bigint "reminder_id"
     t.string "slack_channel_id", null: false
     t.string "icon_emoji"
@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 2019_06_01_001034) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "slack_permalink"
-    t.index ["reminder_id"], name: "index_reminder_logs_on_reminder_id"
+    t.index ["reminder_id"], name: "index_remind_logs_on_reminder_id"
   end
 
   create_table "reminders", force: :cascade do |t|
@@ -68,6 +68,6 @@ ActiveRecord::Schema.define(version: 2019_06_01_001034) do
   end
 
   add_foreign_key "authentications", "users"
-  add_foreign_key "reminder_logs", "reminders"
+  add_foreign_key "remind_logs", "reminders"
   add_foreign_key "reminders", "users"
 end

@@ -2,6 +2,6 @@ class ReminderLogsController < ApplicationController
   include ReminderLogsHelper
 
   def index
-    @reminder_logs = current_user.reminder_logs
+    @remind_logs = current_user.remind_logs
   end
 end

@@ -11,13 +11,13 @@
   </tr>
   </thead>
   <tbody>
-  <% @reminder_logs.each do |reminder_log| %>
+  <% @remind_logs.each do |remind_log| %>
     <tr>
-      <td><%= reminder_log.created_at %></td>
-      <td><%= slack_channel_name(reminder_log) %></td>
-      <td><%= "#{reminder_log.icon_emoji} #{reminder_log.icon_name}" %></td>
-      <td><%= reminder_log.message %></td>
-      <td><%= link_to "-> Slack", reminder_log.slack_permalink, target: '_blank' %></td>
+      <td><%= remind_log.created_at %></td>
+      <td><%= slack_channel_name(remind_log) %></td>
+      <td><%= "#{remind_log.icon_emoji} #{remind_log.icon_name}" %></td>
+      <td><%= remind_log.message %></td>
+      <td><%= link_to "-> Slack", remind_log.slack_permalink, target: '_blank' %></td>
     </tr>
   <% end %>
   </tbody>

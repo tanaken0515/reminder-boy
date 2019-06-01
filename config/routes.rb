@@ -11,5 +11,5 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :reminder_logs, only: [:index]
+  resources :remind_logs, only: [:index]
 end

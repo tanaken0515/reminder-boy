@@ -1,4 +1,14 @@
-<h2>New Reminder</h2>
-<%= link_to '<- Reminders List', reminders_path %>
+<div class="row">
+  <div class="col s12">
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">New Reminder</span>
 
-<%= render partial: 'reminder_form', locals: { reminder: @reminder, slack_channel_list: @slack_channel_list } %>
+        <%= render partial: 'reminder_form', locals: { reminder: @reminder, slack_channel_list: @slack_channel_list } %>
+      </div>
+      <div class="card-action">
+        <%= link_to '<- Reminders List', reminders_path %>
+      </div>
+    </div>
+  </div>
+</div>

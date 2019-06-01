@@ -10,14 +10,22 @@
   </head>
 
   <body>
-    <div>
-      <span><%= link_to 'ReminderBoy', root_path, style: 'text-decoration: none; font-size: xx-large;' %></span>
-      <% if visitor? %>
-        <span style="float:right;"><%= link_to 'Login', login_path %></span>
-      <% else %>
-        <span style="float:right;"><%= link_to 'Logout', logout_path, method: :delete %></span>
-      <% end %>
-    </div>
-    <%= yield %>
+    <nav>
+      <div class="nav-wrapper container">
+        <%= link_to 'ReminderBoy', root_path, style: 'text-decoration: none; font-size: xx-large;' %>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <% if visitor? %>
+            <li><%= link_to 'Login', login_path %></li>
+          <% else %>
+            <li><%= link_to 'Logout', logout_path, method: :delete %></li>
+          <% end %>
+        </ul>
+      </div>
+    </nav>
+    <main>
+      <div class="container">
+        <%= yield %>
+      </div>
+    </main>
   </body>
 </html>

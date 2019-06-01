@@ -17,7 +17,7 @@
       <td><%= slack_channel_name(reminder_log) %></td>
       <td><%= "#{reminder_log.icon_emoji} #{reminder_log.icon_name}" %></td>
       <td><%= reminder_log.message %></td>
-      <td><%= link_to "-> Slack", "#" %></td>
+      <td><%= link_to "-> Slack", reminder_log.slack_permalink, target: '_blank' %></td>
     </tr>
   <% end %>
   </tbody>

@@ -2,7 +2,7 @@ class Reminder < ApplicationRecord
   extend Enumerize
 
   belongs_to :user
-  has_many :reminder_logs
+  has_many :remind_logs
 
   validates :slack_channel_id, presence: true
   validates :message, presence: true
@@ -57,6 +57,6 @@ class Reminder < ApplicationRecord
       icon_name: icon_name,
       slack_message_ts: response.ts
     }
-    reminder_logs.create!(params)
+    remind_logs.create!(params)
   end
 end

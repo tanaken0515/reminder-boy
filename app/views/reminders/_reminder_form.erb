@@ -12,31 +12,31 @@
     <tr>
       <th>曜日</th>
       <td>
-        <label for="reminder_monday_enabled">
+        <label for="reminder_monday_enabled" class="input-field col s1.5">
           <%= f.check_box :monday_enabled %>
           <span>月</span>
-        </label>&nbsp;&nbsp;
-        <label for="reminder_tuesday_enabled">
+        </label>
+        <label for="reminder_tuesday_enabled" class="input-field col s1.5">
           <%= f.check_box :tuesday_enabled %>
           <span>火</span>
-        </label>&nbsp;&nbsp;
-        <label for="reminder_wednesday_enabled">
+        </label>
+        <label for="reminder_wednesday_enabled" class="input-field col s1.5">
           <%= f.check_box :wednesday_enabled %>
           <span>水</span>
-        </label>&nbsp;&nbsp;
-        <label for="reminder_thursday_enabled">
+        </label>
+        <label for="reminder_thursday_enabled" class="input-field col s1.5">
           <%= f.check_box :thursday_enabled %>
           <span>木</span>
-        </label>&nbsp;&nbsp;
-        <label for="reminder_friday_enabled">
+        </label>
+        <label for="reminder_friday_enabled" class="input-field col s1.5">
           <%= f.check_box :friday_enabled %>
           <span>金</span>
-        </label>&nbsp;&nbsp;
-        <label for="reminder_saturday_enabled">
+        </label>
+        <label for="reminder_saturday_enabled" class="input-field col s1.5">
           <%= f.check_box :saturday_enabled %>
           <span>土</span>
-        </label>&nbsp;&nbsp;
-        <label for="reminder_sunday_enabled">
+        </label>
+        <label for="reminder_sunday_enabled" class="input-field col s1.5">
           <%= f.check_box :sunday_enabled %>
           <span>日</span>
         </label>
@@ -66,12 +66,16 @@
     </tr>
     <tr>
       <th>メッセージ</th>
-      <td><%= f.text_area :message %></td>
+      <td>
+        <div class="input-field col s12">
+          <%= f.text_area :message, class: 'materialize-textarea' %>
+        </div>
+      </td>
     </tr>
     <tr>
       <th>祝日の通知</th>
       <td>
-        <label for="reminder_holiday_included">
+        <label for="reminder_holiday_included" class="input-field col s12">
           <%= f.check_box :holiday_included %>
           <span>通知する</span>
         </label>
@@ -80,7 +84,11 @@
     <% unless reminder.new_record? %>
       <tr>
         <th>ステータス</th>
-        <td><%= f.select :status, Reminder.status.values %></td>
+        <td>
+          <div class="input-field col s12">
+            <%= f.select :status, Reminder.status.values, {}, {class: 'browser-default'} %>
+          </div>
+        </td>
       </tr>
     <% end %>
     </tbody>

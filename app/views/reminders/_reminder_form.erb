@@ -45,19 +45,23 @@
     <tr>
       <th>時刻</th>
       <td>
-        <div class="input-field col s2"><%= f.select :hour, (0..23).to_a %><label>hour</label></div>
-        <div class="input-field col s2"><%= f.select :minute, (0..59).step(5).to_a %><label>minute</label></div>
+        <div class="input-field col s2"><%= f.select :hour, (0..23).to_a, {}, {class: 'browser-default'} %></div>
+        <div class="input-field col s2"><%= f.select :minute, (0..59).step(5).to_a, {}, {class: 'browser-default'} %></div>
       </td>
     </tr>
     <tr>
       <th>通知先チャンネル</th>
-      <td><%= f.select :slack_channel_id, active_slack_channel_list, include_blank: true %></td>
+      <td>
+        <div class="input-field col s12">
+          <%= f.select :slack_channel_id, active_slack_channel_list, {}, {include_blank: true, class: 'browser-default'} %>
+        </div>
+      </td>
     </tr>
     <tr>
       <th>アイコン</th>
       <td>
-        <div class="input-field col s3"><%= f.select :icon_emoji, slack_emoji_list, include_blank: true %><label>icon image</label></div>
-        <div class="input-field col s5"><%= f.text_field :icon_name, placeholder: 'お知らせくん' %><label>icon name</label></div>
+        <div class="input-field col s3"><%= f.select :icon_emoji, slack_emoji_list, {}, {include_blank: true, class: 'browser-default'} %></div>
+        <div class="input-field col s5"><%= f.text_field :icon_name, placeholder: 'お知らせくん' %></div>
       </td>
     </tr>
     <tr>

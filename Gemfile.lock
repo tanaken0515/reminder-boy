@@ -47,6 +47,8 @@ GEM
     bootsnap (1.4.4)
       msgpack (~> 1.0)
     builder (3.2.3)
+    bulma-rails (0.7.5)
+      sassc (~> 2.0)
     byebug (11.0.1)
     concurrent-ruby (1.1.5)
     crass (1.0.4)
@@ -140,6 +142,9 @@ GEM
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
       tilt (>= 1.1, < 3)
+    sassc (2.0.1)
+      ffi (~> 1.9)
+      rake
     slack-ruby-client (0.14.2)
       activesupport
       faraday (>= 0.9)
@@ -183,6 +188,7 @@ PLATFORMS
 
 DEPENDENCIES
   bootsnap (>= 1.1.0)
+  bulma-rails
   byebug
   dotenv-rails
   enumerize

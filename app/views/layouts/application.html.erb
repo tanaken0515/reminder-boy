@@ -10,16 +10,24 @@
   </head>
 
   <body>
-    <nav>
-      <div class="nav-wrapper container">
-        <%= link_to 'ReminderBoy', root_path, style: 'text-decoration: none; font-size: xx-large;' %>
-        <ul id="nav-mobile" class="right hide-on-med-and-down">
-          <% if visitor? %>
-            <li><%= link_to 'Login', login_path %></li>
-          <% else %>
-            <li><%= link_to 'Logout', logout_path, method: :delete %></li>
-          <% end %>
-        </ul>
+    <nav class="navbar is-info" role="navigation" aria-label="main navigation">
+      <div class="container">
+        <div class="navbar-brand">
+          <%= link_to 'ReminderBoy', root_path, style: 'text-decoration: none; font-size: xx-large;', class: "navbar-item" %>
+        </div>
+        <div class="navbar-menu">
+          <div class="navbar-end">
+            <div class="navbar-item">
+              <div class="buttons">
+                <% if visitor? %>
+                  <%= link_to 'Login', login_path, class: "button is-light" %>
+                <% else %>
+                  <%= link_to 'Logout', logout_path, class: "button is-light"  %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </nav>
     <main>

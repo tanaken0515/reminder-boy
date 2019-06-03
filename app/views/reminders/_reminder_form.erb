@@ -7,93 +7,75 @@
 <% end %>
 
 <%= form_with(model: reminder, local: true) do |f| %>
-  <table>
+  <table class="table is-fullwidth is-hoverable">
     <tbody>
     <tr>
       <th>曜日</th>
       <td>
-        <label for="reminder_monday_enabled" class="input-field col s1.5">
-          <%= f.check_box :monday_enabled %>
-          <span>月</span>
-        </label>
-        <label for="reminder_tuesday_enabled" class="input-field col s1.5">
-          <%= f.check_box :tuesday_enabled %>
-          <span>火</span>
-        </label>
-        <label for="reminder_wednesday_enabled" class="input-field col s1.5">
-          <%= f.check_box :wednesday_enabled %>
-          <span>水</span>
-        </label>
-        <label for="reminder_thursday_enabled" class="input-field col s1.5">
-          <%= f.check_box :thursday_enabled %>
-          <span>木</span>
-        </label>
-        <label for="reminder_friday_enabled" class="input-field col s1.5">
-          <%= f.check_box :friday_enabled %>
-          <span>金</span>
-        </label>
-        <label for="reminder_saturday_enabled" class="input-field col s1.5">
-          <%= f.check_box :saturday_enabled %>
-          <span>土</span>
-        </label>
-        <label for="reminder_sunday_enabled" class="input-field col s1.5">
-          <%= f.check_box :sunday_enabled %>
-          <span>日</span>
-        </label>
+        <div class="field is-grouped">
+          <label class="checkbox control"><%= f.check_box :monday_enabled %>月</label>
+          <label class="checkbox control"><%= f.check_box :tuesday_enabled %>火</label>
+          <label class="checkbox control"><%= f.check_box :wednesday_enabled %>水</label>
+          <label class="checkbox control"><%= f.check_box :thursday_enabled %>木</label>
+          <label class="checkbox control"><%= f.check_box :friday_enabled %>金</label>
+          <label class="checkbox control"><%= f.check_box :saturday_enabled %>土</label>
+          <label class="checkbox control"><%= f.check_box :sunday_enabled %>日</label>
+        </div>
       </td>
     </tr>
     <tr>
       <th>時刻</th>
       <td>
-        <div class="input-field col s2"><%= f.select :hour, (0..23).to_a, {}, {class: 'browser-default'} %></div>
-        <div class="input-field col s2"><%= f.select :minute, (0..59).step(5).to_a, {}, {class: 'browser-default'} %></div>
+        <div class="field is-grouped">
+          <div class="select control"><%= f.select :hour, (0..23).to_a %></div>
+          <div class="select control"><%= f.select :minute, (0..59).step(5).to_a %></div>
+        </div>
       </td>
     </tr>
     <tr>
       <th>通知先チャンネル</th>
       <td>
-        <div class="input-field col s12">
-          <%= f.select :slack_channel_id, active_slack_channel_list, {}, {include_blank: true, class: 'browser-default'} %>
+        <div class="select">
+          <%= f.select :slack_channel_id, active_slack_channel_list, include_blank: true %>
         </div>
       </td>
     </tr>
     <tr>
       <th>アイコン</th>
       <td>
-        <div class="input-field col s3"><%= f.select :icon_emoji, slack_emoji_list, {}, {include_blank: true, class: 'browser-default'} %></div>
-        <div class="input-field col s5"><%= f.text_field :icon_name, placeholder: 'お知らせくん' %></div>
+        <div class="field is-grouped">
+          <div class="select control"><%= f.select :icon_emoji, slack_emoji_list, include_blank: true %></div>
+          <div class="control is-expanded"><%= f.text_field :icon_name, placeholder: 'お知らせくん', class: 'input' %></div>
+        </div>
       </td>
     </tr>
     <tr>
       <th>メッセージ</th>
       <td>
-        <div class="input-field col s12">
-          <%= f.text_area :message, class: 'materialize-textarea' %>
-        </div>
+        <%= f.text_area :message, class: 'textarea' %>
       </td>
     </tr>
     <tr>
       <th>祝日の通知</th>
       <td>
-        <label for="reminder_holiday_included" class="input-field col s12">
-          <%= f.check_box :holiday_included %>
-          <span>通知する</span>
-        </label>
+        <label class="checkbox"><%= f.check_box :holiday_included %>通知する</label>
       </td>
     </tr>
     <% unless reminder.new_record? %>
       <tr>
         <th>ステータス</th>
         <td>
-          <div class="input-field col s12">
-            <%= f.select :status, Reminder.status.values, {}, {class: 'browser-default'} %>
+          <div class="select">
+            <%= f.select :status, Reminder.status.values %>
           </div>
         </td>
       </tr>
     <% end %>
     </tbody>
   </table>
-  <div class="card-action center-align">
-    <%= f.submit nil, class: 'btn waves-effect waves-light'%>
+  <div class="level">
+    <div class="level-item">
+      <%= f.submit nil, class: 'button is-primary'%>
+    </div>
   </div>
 <% end %>

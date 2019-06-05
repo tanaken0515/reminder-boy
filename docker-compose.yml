@@ -7,7 +7,11 @@ services:
       - ./tmp/db:/var/lib/postgresql/data
     ports:
       - "5432:5432"
-  web:
+  redis:
+    image: redis:5.0
+    ports:
+      - "6379:6379"
+  web: &web_base
     build: .
     command: bundle exec rails s -p 3000 -b '0.0.0.0'
     volumes:
@@ -17,8 +21,13 @@ services:
       - "3000:3000"
     depends_on:
       - database
+      - redis
     tty: true
     stdin_open: true
+  worker:
+    <<: *web_base
+    command: bundle exec sidekiq
+    ports: []
 
 volumes:
   bundle-volume:

@@ -36,7 +36,8 @@ class RemindersController < ApplicationController
   end
 
   def post_message
-    render json: @reminder.post
+    TestNoticeWorker.perform_async(@reminder.id)
+    render status: 200, json: {status: 200, message: "Success"}
   end
 
   private

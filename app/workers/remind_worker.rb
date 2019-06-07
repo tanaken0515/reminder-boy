@@ -1,7 +1,8 @@
 class RemindWorker
   include Sidekiq::Worker
 
-  def perform(*args)
-    # Do something
+  def perform(reminder_id)
+    reminder = Reminder.find(reminder_id)
+    reminder.remind!
   end
 end

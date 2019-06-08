@@ -13,6 +13,33 @@ class Reminder < ApplicationRecord
   enumerize :status, in: { activated: 0, deactivated: 1, archived: 2 },
             default: :activated, predicates: true, scope: true
 
+  scope :holiday_included, -> {where(holiday_included: true)}
+  scope :enabled_on_day_of_week, ->(wday) {
+    case wday
+    when 0
+      where(sunday_enabled: true)
+    when 1
+      where(monday_enabled: true)
+    when 2
+      where(tueday_enabled: true)
+    when 3
+      where(wednesday_enabled: true)
+    when 4
+      where(thursday_enabled: true)
+    when 5
+      where(friday_enabled: true)
+    when 6
+      where(saturday_enabled: true)
+    else
+      nil
+    end
+  }
+  scope :active_on_date, ->(date) {
+    scope = with_status(:activated).enabled_on_day_of_week(date.wday)
+    is_holiday = false #todo: https://rubygems.org/gems/holiday_jp/ を使う
+    is_holiday ? scope.holiday_included : scope
+  }
+
   def enabled_day_of_weeks
     day_of_weeks = %i(monday tuesday wednesday thursday friday saturday sunday)
     @enabled_day_of_week_list ||= day_of_weeks.select {|day_of_week| self.send("#{day_of_week}_enabled?")}

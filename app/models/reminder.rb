@@ -36,8 +36,7 @@ class Reminder < ApplicationRecord
   }
   scope :active_on_date, ->(date) {
     scope = with_status(:activated).enabled_on_day_of_week(date.wday)
-    is_holiday = false #todo: https://rubygems.org/gems/holiday_jp/ を使う
-    is_holiday ? scope.holiday_included : scope
+    HolidayJp.holiday?(date) ? scope.holiday_included : scope
   }
 
   def enabled_day_of_weeks

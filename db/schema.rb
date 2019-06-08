@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_01_005510) do
+ActiveRecord::Schema.define(version: 2019_06_08_031737) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,6 +57,7 @@ ActiveRecord::Schema.define(version: 2019_06_01_005510) do
     t.boolean "sunday_enabled", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.time "scheduled_time", default: "2000-01-01 00:00:00", null: false
     t.index ["user_id"], name: "index_reminders_on_user_id"
   end
 

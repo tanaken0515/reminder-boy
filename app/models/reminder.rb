@@ -13,6 +13,44 @@ class Reminder < ApplicationRecord
   enumerize :status, in: { activated: 0, deactivated: 1, archived: 2 },
             default: :activated, predicates: true, scope: true
 
+  after_validation :set_scheduled_time
+
+  scope :holiday_included, -> {where(holiday_included: true)}
+  scope :enabled_on_day_of_week, ->(wday) {
+    case wday
+    when 0
+      where(sunday_enabled: true)
+    when 1
+      where(monday_enabled: true)
+    when 2
+      where(tueday_enabled: true)
+    when 3
+      where(wednesday_enabled: true)
+    when 4
+      where(thursday_enabled: true)
+    when 5
+      where(friday_enabled: true)
+    when 6
+      where(saturday_enabled: true)
+    else
+      nil
+    end
+  }
+  scope :active_on_date, ->(date) {
+    scope = with_status(:activated).enabled_on_day_of_week(date.wday)
+    HolidayJp.holiday?(date) ? scope.holiday_included : scope
+  }
+  scope :scheduled_between, ->(from, to) {
+    from_time = from.strftime("%H:%M:%S")
+    to_time = to.strftime("%H:%M:%S")
+
+    if from_time > to_time
+      where(scheduled_time: from_time..'23:59:59').or(where(scheduled_time: '00:00:00'..to_time))
+    else
+      where(scheduled_time: from_time..to_time)
+    end
+  }
+
   def enabled_day_of_weeks
     day_of_weeks = %i(monday tuesday wednesday thursday friday saturday sunday)
     @enabled_day_of_week_list ||= day_of_weeks.select {|day_of_week| self.send("#{day_of_week}_enabled?")}
@@ -58,5 +96,9 @@ class Reminder < ApplicationRecord
       slack_message_ts: response.ts
     }
     remind_logs.create!(params)
+  end
+
+  def set_scheduled_time
+    self.scheduled_time = format("%02d:%02d", hour, minute)
   end
 end

@@ -40,6 +40,9 @@ class Reminder < ApplicationRecord
     scope = with_status(:activated).enabled_on_day_of_week(date.wday)
     HolidayJp.holiday?(date) ? scope.holiday_included : scope
   }
+  scope :scheduled_between, ->(from, to) {
+    where(scheduled_time: from.strftime("%H:%M:%S")..to.strftime("%H:%M:%S"))
+  }
 
   def enabled_day_of_weeks
     day_of_weeks = %i(monday tuesday wednesday thursday friday saturday sunday)

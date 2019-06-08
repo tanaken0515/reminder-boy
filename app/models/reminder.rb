@@ -13,6 +13,8 @@ class Reminder < ApplicationRecord
   enumerize :status, in: { activated: 0, deactivated: 1, archived: 2 },
             default: :activated, predicates: true, scope: true
 
+  after_validation :set_scheduled_time
+
   scope :holiday_included, -> {where(holiday_included: true)}
   scope :enabled_on_day_of_week, ->(wday) {
     case wday
@@ -84,5 +86,9 @@ class Reminder < ApplicationRecord
       slack_message_ts: response.ts
     }
     remind_logs.create!(params)
+  end
+
+  def set_scheduled_time
+    self.scheduled_time = format("%02d:%02d", hour, minute)
   end
 end

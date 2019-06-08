@@ -70,6 +70,7 @@ GEM
     globalid (0.4.2)
       activesupport (>= 4.2.0)
     hashie (3.6.0)
+    holiday_jp (0.7.1)
     i18n (1.6.0)
       concurrent-ruby (~> 1.0)
     jbuilder (2.9.1)
@@ -201,6 +202,7 @@ DEPENDENCIES
   byebug
   dotenv-rails
   enumerize
+  holiday_jp
   jbuilder (~> 2.5)
   listen (>= 3.0.5, < 3.2)
   mini_racer

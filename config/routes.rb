@@ -1,4 +1,9 @@
+require 'sidekiq/web'
+require 'sidekiq-scheduler/web'
+
 Rails.application.routes.draw do
+  mount Sidekiq::Web => '/sidekiq' #todo:adminだけ見れるようにする
+
   get '/login', to: 'sessions#new'
   get '/callback', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'

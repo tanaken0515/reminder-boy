@@ -33,7 +33,7 @@ class Reminder < ApplicationRecord
     when 6
       where(saturday_enabled: true)
     else
-      nil
+      none
     end
   }
   scope :active_on_date, ->(date) {
@@ -41,6 +41,8 @@ class Reminder < ApplicationRecord
     HolidayJp.holiday?(date) ? scope.holiday_included : scope
   }
   scope :scheduled_between, ->(from, to) {
+    return none if from > to
+
     from_time = from.strftime("%H:%M:%S")
     to_time = to.strftime("%H:%M:%S")
 

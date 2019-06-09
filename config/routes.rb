@@ -27,5 +27,7 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :users, only: [:index]
     mount Sidekiq::Web => '/sidekiq', constraints: AdminConstraint.new
+
+    root to: 'users#index'
   end
 end

@@ -60,12 +60,17 @@ GEM
     enumerize (2.3.1)
       activesupport (>= 3.2)
     erubi (1.8.0)
+    et-orbi (1.2.1)
+      tzinfo
     execjs (2.7.0)
     faraday (0.15.4)
       multipart-post (>= 1.2, < 3)
     faraday_middleware (0.13.1)
       faraday (>= 0.7.4, < 1.0)
     ffi (1.11.1)
+    fugit (1.2.1)
+      et-orbi (~> 1.1, >= 1.1.8)
+      raabro (~> 1.1)
     gli (2.18.0)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
@@ -101,6 +106,7 @@ GEM
       mini_portile2 (~> 2.4.0)
     pg (1.1.4)
     puma (3.12.1)
+    raabro (1.1.6)
     rack (2.0.7)
     rack-protection (2.0.5)
       rack
@@ -136,6 +142,8 @@ GEM
       ffi (~> 1.0)
     redis (4.1.2)
     ruby_dep (1.5.0)
+    rufus-scheduler (3.6.0)
+      fugit (~> 1.1, >= 1.1.6)
     sass (3.7.4)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
@@ -155,6 +163,11 @@ GEM
       rack (>= 1.5.0)
       rack-protection (>= 1.5.0)
       redis (>= 3.3.5, < 5)
+    sidekiq-scheduler (3.0.0)
+      redis (>= 3, < 5)
+      rufus-scheduler (~> 3.2)
+      sidekiq (>= 3)
+      tilt (>= 1.4.0)
     slack-ruby-client (0.14.2)
       activesupport
       faraday (>= 0.9)
@@ -211,6 +224,7 @@ DEPENDENCIES
   rails (~> 5.2.3)
   sass-rails (~> 5.0)
   sidekiq
+  sidekiq-scheduler
   slack-ruby-client
   spring
   spring-watcher-listen (~> 2.0.0)

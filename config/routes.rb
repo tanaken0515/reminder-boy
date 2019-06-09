@@ -1,9 +1,15 @@
 require 'sidekiq/web'
 require 'sidekiq-scheduler/web'
 
-Rails.application.routes.draw do
-  mount Sidekiq::Web => '/sidekiq' #todo:adminだけ見れるようにする
+class AdminConstraint
+  def matches?(request)
+    user_id = request.session[:user_id]
 
+    User.find_by(id: user_id)&.role_admin? if user_id
+  end
+end
+
+Rails.application.routes.draw do
   get '/login', to: 'sessions#new'
   get '/callback', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
@@ -20,5 +26,6 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :users, only: [:index]
+    mount Sidekiq::Web => '/sidekiq', constraints: AdminConstraint.new
   end
 end

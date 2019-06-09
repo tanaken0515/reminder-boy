@@ -6,8 +6,8 @@ class User < ApplicationRecord
   has_many :remind_logs, through: :reminders
 
   validates :name, presence: true
-  enumerize :role, in: { none: 0, admin: 1 },
-            default: :none, predicates: true, scope: true
+  enumerize :role, in: {none: 0, admin: 1},
+            default: :none, predicates: {prefix: true}, scope: true
 
   def self.create_with!(authentication)
     ApplicationRecord.transaction do

@@ -17,4 +17,8 @@ Rails.application.routes.draw do
   end
 
   resources :remind_logs, only: [:index]
+
+  namespace :admin do
+    resources :users, only: [:index]
+  end
 end

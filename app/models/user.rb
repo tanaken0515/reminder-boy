@@ -1,16 +1,20 @@
 class User < ApplicationRecord
+  extend Enumerize
+
   has_many :authentications
   has_many :reminders
   has_many :remind_logs, through: :reminders
 
   validates :name, presence: true
+  enumerize :role, in: {none: 0, admin: 1},
+            default: :none, predicates: {prefix: true}, scope: true
 
   def self.create_with!(authentication)
     ApplicationRecord.transaction do
-      response = Slack::Web::Client.new(token: authentication.access_token).users_identity
+      response = Slack::Web::Client.new(token: authentication.access_token).users_profile_get
       user_params = {
-        name: response.dig(:user, :name),
-        avatar_url: response.dig(:user, :image_192)
+        name: response.dig(:profile, :real_name),
+        avatar_url: response.dig(:profile, :image_192)
       }
       user = User.create!(user_params)
       authentication.user = user

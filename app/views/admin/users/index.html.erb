@@ -11,4 +11,37 @@
       </div>
     </div>
   </div>
+  <table class="table is-fullwidth is-hoverable">
+    <thead>
+    <tr>
+      <th>id</th>
+      <th>ユーザ名</th>
+      <th>権限</th>
+      <th>登録日時</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.id %></td>
+        <td>
+          <article class="media">
+            <% unless user.avatar_url.empty? %>
+              <div class="media-left">
+                <figure class="image is-32x32">
+                  <%= image_tag(user.avatar_url, alt: "user_#{user.id}_avatar_url") %>
+                </figure>
+              </div>
+            <% end %>
+            <div class="media-content">
+              <%= user.name %>
+            </div>
+          </article>
+        </td>
+        <td><%= user.role %></td>
+        <td><%= user.created_at %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
 </section>

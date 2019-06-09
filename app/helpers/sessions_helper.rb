@@ -22,4 +22,8 @@ module SessionsHelper
   def user?
     !self.visitor?
   end
+
+  def admin?
+    current_user.role_admin?
+  end
 end

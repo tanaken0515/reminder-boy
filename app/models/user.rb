@@ -1,9 +1,13 @@
 class User < ApplicationRecord
+  extend Enumerize
+
   has_many :authentications
   has_many :reminders
   has_many :remind_logs, through: :reminders
 
   validates :name, presence: true
+  enumerize :role, in: { none: 0, admin: 1 },
+            default: :none, predicates: true, scope: true
 
   def self.create_with!(authentication)
     ApplicationRecord.transaction do

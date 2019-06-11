@@ -23,7 +23,7 @@ class Reminder < ApplicationRecord
     when 1
       where(monday_enabled: true)
     when 2
-      where(tueday_enabled: true)
+      where(tuesday_enabled: true)
     when 3
       where(wednesday_enabled: true)
     when 4

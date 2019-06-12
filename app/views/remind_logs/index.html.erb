@@ -31,7 +31,7 @@
             <% unless remind_log.icon_name.empty? %>
               <div class="media-left">
                 <figure class="image is-32x32">
-                  <%= image_tag(slack_emoji_url(remind_log), alt: "emoji_#{remind_log.icon_name}") %>
+                  <%= image_tag(slack_emoji_url(remind_log), alt: "emoji_#{remind_log.icon_emoji}") %>
                 </figure>
               </div>
             <% end %>

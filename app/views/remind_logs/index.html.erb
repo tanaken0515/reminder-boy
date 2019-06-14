@@ -26,7 +26,20 @@
       <tr>
         <td><%= remind_log.created_at %></td>
         <td><%= slack_channel_name(remind_log) %></td>
-        <td><%= "#{remind_log.icon_emoji} #{remind_log.icon_name}" %></td>
+        <td>
+          <article class="media">
+            <% unless remind_log.icon_name.empty? %>
+              <div class="media-left">
+                <figure class="image is-32x32">
+                  <%= image_tag(slack_emoji_url(remind_log), alt: "emoji_#{remind_log.icon_emoji}") %>
+                </figure>
+              </div>
+            <% end %>
+            <div class="media-content">
+              <%= remind_log.icon_name %>
+            </div>
+          </article>
+        </td>
         <td><%= remind_log.message %></td>
         <td><%= link_to "-> Slack", remind_log.slack_permalink, target: '_blank' %></td>
       </tr>

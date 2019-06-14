@@ -44,7 +44,12 @@
       <th>アイコン</th>
       <td>
         <div class="field is-grouped">
-          <div class="select control"><%= f.select :icon_emoji, slack_emoji_list, include_blank: true %></div>
+          <div class="control">
+            <%= f.text_field :icon_emoji, placeholder: 'emoji', class: 'input', autocomplete: 'on', list: 'slack_emoji_list' %>
+            <datalist id="slack_emoji_list">
+              <%= options_for_select(slack_emoji_list) %>
+            </datalist>
+          </div>
           <div class="control is-expanded"><%= f.text_field :icon_name, placeholder: 'お知らせくん', class: 'input' %></div>
         </div>
       </td>

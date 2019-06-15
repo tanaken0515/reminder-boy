@@ -49,4 +49,10 @@ class User < ApplicationRecord
   def slack_client
     @client ||= Slack::Web::Client.new(token: latest_authentication.access_token)
   end
+
+  def time_zone
+    # todo: カラムを追加してユーザごとに設定できるようにする
+    # 取り急ぎは'Asia/Tokyo'で良いが、slackに審査を依頼する時にはglobalで使える状態にしておきたい
+    'Asia/Tokyo'
+  end
 end

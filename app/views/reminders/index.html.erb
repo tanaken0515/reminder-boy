@@ -31,7 +31,7 @@
     <% @reminders.each do |reminder| %>
       <tr>
         <td><%= day_of_week(reminder) %></td>
-        <td><%= format("%02d:%02d", reminder.hour, reminder.minute) %></td>
+        <td><%= reminder.scheduled_time.strftime("%H:%M") %></td>
         <td><%= slack_channel_name(reminder) %></td>
         <td><%= "#{reminder.icon_emoji} #{reminder.icon_name}" %></td>
         <td><%= reminder.message %></td>

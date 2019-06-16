@@ -78,7 +78,8 @@ class Reminder < ApplicationRecord
       text: message,
       as_user: false,
       icon_emoji: ":#{icon_emoji}:",
-      username: icon_name
+      username: icon_name,
+      link_names: true,
     }
     begin
       user.slack_client.chat_postMessage(params)

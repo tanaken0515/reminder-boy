@@ -24,6 +24,10 @@
       <small>updated at <%= reminder.updated_at %></small>
     </div>
   <% end %>
+  <% if show_links %>
+    <%= link_to(tag.span(tag.i(nil, class: 'fas fa-info-circle'), class: 'icon'), reminder_path(reminder)) %>
+    <%= link_to(tag.span(tag.i(nil, class: 'fas fa-edit'), class: 'icon'), edit_reminder_path(reminder)) %>
+  <% end %>
 </div>
 <div class="box">
   <article class="media">

@@ -16,12 +16,14 @@
       <% end %>
     </div>
   </div>
-  <div class="control">
-    <small>created at <%= reminder.created_at %></small>
-  </div>
-  <div class="control">
-    <small>updated at <%= reminder.updated_at %></small>
-  </div>
+  <% if show_timestamps %>
+    <div class="control">
+      <small>created at <%= reminder.created_at %></small>
+    </div>
+    <div class="control">
+      <small>updated at <%= reminder.updated_at %></small>
+    </div>
+  <% end %>
 </div>
 <div class="box">
   <article class="media">

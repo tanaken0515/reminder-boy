@@ -30,4 +30,19 @@ module RemindersHelper
   def slack_emoji_list
     current_user.slack_emoji_list.map {|k, v| k} #todo: 画像urlを使って良い感じにする
   end
+
+  def slack_emoji_url(reminder)
+    default_emoji_url = 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/320/twitter/185/dog-face_1f436.png'
+    current_user.slack_emoji_list[reminder.icon_emoji] || default_emoji_url
+  end
+
+  def css_class_status(reminder)
+    if reminder.activated?
+      'is-primary'
+    elsif reminder.deactivated?
+      'has-background-grey-light'
+    else
+      'is-dark'
+    end
+  end
 end

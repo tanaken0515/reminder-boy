@@ -1,0 +1,49 @@
+<div class="field is-grouped">
+  <div class="control"><strong><%= "#" + slack_channel_name(reminder) %></strong></div>
+  <div class="control">
+    <div class="tags has-addons">
+      <span class="tag">Status</span>
+      <span class="tag <%= css_class_status(reminder) %>"><%= reminder.status %></span>
+    </div>
+  </div>
+  <div class="control">
+    <div class="tags has-addons">
+      <span class="tag">祝日の通知</span>
+      <% if reminder.holiday_included? %>
+        <span class="tag is-primary">ON</span>
+      <% else %>
+        <span class="tag has-background-grey-light">OFF</span>
+      <% end %>
+    </div>
+  </div>
+  <% if show_timestamps %>
+    <div class="control">
+      <small>created at <%= reminder.created_at %></small>
+    </div>
+    <div class="control">
+      <small>updated at <%= reminder.updated_at %></small>
+    </div>
+  <% end %>
+  <% if show_links %>
+    <%= link_to(tag.span(tag.i(nil, class: 'fas fa-info-circle'), class: 'icon'), reminder_path(reminder)) %>
+    <%= link_to(tag.span(tag.i(nil, class: 'fas fa-edit'), class: 'icon'), edit_reminder_path(reminder)) %>
+  <% end %>
+</div>
+<div class="box">
+  <article class="media">
+    <div class="media-left">
+      <figure class="image is-32x32">
+        <%= image_tag(slack_emoji_url(reminder), alt: "emoji_#{reminder.icon_emoji}") %>
+      </figure>
+    </div>
+    <div class="media-content">
+      <div class="content">
+        <strong><%= reminder.icon_name %></strong>
+        <small><%= day_of_week(reminder) %></small>
+        <small><%= reminder.scheduled_time.strftime("%H:%M") %></small>
+        <br>
+        <%= simple_format(h(reminder.message)) %>
+      </div>
+    </div>
+  </article>
+</div>

@@ -11,46 +11,7 @@
       </div>
     </div>
   </div>
-  <table class="table is-fullwidth is-hoverable">
-    <tbody>
-    <tr>
-      <th>曜日</th>
-      <td><%= day_of_week(@reminder) %></td>
-    </tr>
-    <tr>
-      <th>時刻</th>
-      <td><%= @reminder.scheduled_time.strftime("%H:%M") %></td>
-    </tr>
-    <tr>
-      <th>通知先チャンネル</th>
-      <td><%= slack_channel_name(@reminder) %></td>
-    </tr>
-    <tr>
-      <th>アイコン</th>
-      <td><%= "#{@reminder.icon_emoji} #{@reminder.icon_name}" %></td>
-    </tr>
-    <tr>
-      <th>メッセージ</th>
-      <td><%= @reminder.message %></td>
-    </tr>
-    <tr>
-      <th>祝日の通知</th>
-      <td><%= @reminder.holiday_included? ? '通知する' : '通知しない' %></td>
-    </tr>
-    <tr>
-      <th>ステータス</th>
-      <td><%= @reminder.status %></td>
-    </tr>
-    <tr>
-      <th>作成日時</th>
-      <td><%= @reminder.created_at %></td>
-    </tr>
-    <tr>
-      <th>更新日時</th>
-      <td><%= @reminder.updated_at %></td>
-    </tr>
-    </tbody>
-  </table>
+  <%= render(partial: 'reminder', locals: {reminder: @reminder, show_timestamps: true, show_links: false}) %>
   <div class="level">
     <div class="level-item">
       <div class="buttons">

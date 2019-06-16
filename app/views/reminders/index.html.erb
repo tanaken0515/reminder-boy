@@ -14,32 +14,5 @@
       </div>
     </div>
   </div>
-  <table class="table is-fullwidth is-hoverable">
-    <thead>
-    <tr>
-      <th>曜日</th>
-      <th>時刻</th>
-      <th>通知先チャンネル</th>
-      <th>アイコン</th>
-      <th>メッセージ</th>
-      <th>祝日の通知</th>
-      <th>ステータス</th>
-      <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    <% @reminders.each do |reminder| %>
-      <tr>
-        <td><%= day_of_week(reminder) %></td>
-        <td><%= reminder.scheduled_time.strftime("%H:%M") %></td>
-        <td><%= slack_channel_name(reminder) %></td>
-        <td><%= "#{reminder.icon_emoji} #{reminder.icon_name}" %></td>
-        <td><%= reminder.message %></td>
-        <td><%= reminder.holiday_included? ? '通知する' : '通知しない' %></td>
-        <td><%= reminder.status %></td>
-        <td><%= link_to "-> Detail", reminder_path(reminder) %> <%= link_to '-> Edit', edit_reminder_path(reminder) %></td>
-      </tr>
-    <% end %>
-    </tbody>
-  </table>
+  <%= render(partial: 'reminder', collection: @reminders, as: :reminder, locals: {show_timestamps: false, show_links: true}) %>
 </section>

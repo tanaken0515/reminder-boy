@@ -38,7 +38,7 @@ class User < ApplicationRecord
 
     Rails.cache.fetch(key, expires_in: 1.hours) do
       response = slack_client.emoji_list
-      response.ok ? response.emoji : {}
+      response.ok ? response.emoji.select {|emoji, url| url.match(/^https*/)} : {}
     end
   end
 

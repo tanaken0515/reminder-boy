@@ -7,6 +7,8 @@ class RemindLog < ApplicationRecord
 
   before_create :set_slack_permalink
 
+  scope :from_latest, -> () {order(created_at: :desc)}
+
   def set_slack_permalink
     slack_client = reminder.user.slack_client
 

@@ -1,0 +1,23 @@
+<div class="field is-grouped">
+  <div class="control"><strong><%= "#" + slack_channel_name(remind_log) %></strong></div>
+  <div class="control">
+    <%= link_to(tag.span(tag.i(nil, class: 'fas fa-link'), class: 'icon'), remind_log.slack_permalink, target: '_blank') %>
+  </div>
+</div>
+<div class="box">
+  <article class="media">
+    <div class="media-left">
+      <figure class="image is-32x32">
+        <%= image_tag(slack_emoji_url(remind_log), alt: "emoji_#{remind_log.icon_emoji}") %>
+      </figure>
+    </div>
+    <div class="media-content">
+      <div class="content">
+        <strong><%= remind_log.icon_name %></strong>
+        <small><%= remind_log.created_at.strftime("%Y-%m-%d %H:%M") %></small>
+        <br>
+        <%= simple_format(h(remind_log.message)) %>
+      </div>
+    </div>
+  </article>
+</div>

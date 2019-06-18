@@ -4,8 +4,8 @@ module RemindLogsHelper
     slack_channel ? slack_channel.name : ''
   end
 
-  def slack_emoji_url(remind_log)
+  def slack_remind_log_emoji_url(remind_log)
     default_emoji_url = 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/320/twitter/185/dog-face_1f436.png'
-    current_user.slack_emoji_list[remind_log.icon_emoji] || default_emoji_url
+    current_user.slack_emoji_list[remind_log.icon_emoji] || remind_log.emoji_url || default_emoji_url
   end
 end

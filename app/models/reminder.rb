@@ -98,7 +98,7 @@ class Reminder < ApplicationRecord
       icon_emoji: icon_emoji,
       icon_name: icon_name,
       slack_message_ts: response.ts,
-      emoji_url: response.dig(:icons, :image_64) || default_emoji_url
+      emoji_url: response.dig(:message, :icons, :image_64) || default_emoji_url
     }
     remind_logs.create!(params)
   end

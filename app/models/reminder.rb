@@ -91,12 +91,14 @@ class Reminder < ApplicationRecord
 
   def remind!
     response = post
+    default_emoji_url = 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/320/twitter/185/dog-face_1f436.png'
     params = {
       slack_channel_id: slack_channel_id,
       message: message,
       icon_emoji: icon_emoji,
       icon_name: icon_name,
-      slack_message_ts: response.ts
+      slack_message_ts: response.ts,
+      emoji_url: response.dig(:icons, :image_64) || default_emoji_url
     }
     remind_logs.create!(params)
   end

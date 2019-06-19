@@ -15,7 +15,7 @@ class RemindersController < ApplicationController
     @reminder = current_user.reminders.new(reminder_params)
 
     if @reminder.save
-      redirect_to reminders_path
+      redirect_to reminder_path(@reminder)
     else
       render :new
     end

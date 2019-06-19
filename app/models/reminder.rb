@@ -13,6 +13,9 @@ class Reminder < ApplicationRecord
   enumerize :status, in: { activated: 0, deactivated: 1, archived: 2 },
             default: :activated, predicates: true, scope: true
 
+  # custom validations
+  validate :validate_slack_channel_id_is_included_in_active_channel_list
+
   after_validation :set_scheduled_time
 
   scope :from_latest, -> {order(created_at: :desc)}
@@ -106,5 +109,17 @@ class Reminder < ApplicationRecord
 
   def set_scheduled_time
     self.scheduled_time = format("%02d:%02d", hour, minute)
+  end
+
+  private
+
+  def validate_slack_channel_id_is_included_in_active_channel_list
+    @active_slack_channel_ids ||= user.slack_channel_list.map do |k, v|
+      v.is_archived ? nil : v.id
+    end.compact
+
+    unless @active_slack_channel_ids.include?(slack_channel_id)
+      errors.add(:slack_channel_id, 'is not included in active channel list')
+    end
   end
 end

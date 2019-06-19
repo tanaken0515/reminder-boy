@@ -15,6 +15,7 @@ class Reminder < ApplicationRecord
 
   after_validation :set_scheduled_time
 
+  scope :from_latest, -> {order(created_at: :desc)}
   scope :holiday_included, -> {where(holiday_included: true)}
   scope :enabled_on_day_of_week, ->(wday) {
     case wday

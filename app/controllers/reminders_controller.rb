@@ -4,7 +4,7 @@ class RemindersController < ApplicationController
   before_action :set_reminder, only: [:show, :edit, :update, :post_message]
 
   def index
-    @reminders = current_user.reminders
+    @reminders = current_user.reminders.from_latest
   end
 
   def new

@@ -8,13 +8,16 @@
 
 <%= form_with(model: reminder, local: true) do |f| %>
   <div class="field is-grouped">
+    <div class="control"><strong>#</strong></div>
     <div class="control">
-      <strong>
-        #
-        <div class="select">
-          <%= f.select :slack_channel_id, active_slack_channel_list, include_blank: true %>
-        </div>
-      </strong>
+    <%= f.text_field :slack_channel_id,
+                        placeholder: 'channel',
+                        class: 'input',
+                        autocomplete: 'on',
+                        list: 'active_slack_channel_list' %>
+      <datalist id="active_slack_channel_list">
+        <%= options_for_select(active_slack_channel_list) %>
+      </datalist>
     </div>
     <div class="control">
       <% unless reminder.new_record? %>

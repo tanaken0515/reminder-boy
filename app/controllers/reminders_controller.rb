@@ -4,7 +4,7 @@ class RemindersController < ApplicationController
   before_action :set_reminder, only: [:show, :edit, :update, :post_message]
 
   def index
-    @reminders = current_user.reminders
+    @reminders = current_user.reminders.from_latest
   end
 
   def new
@@ -15,7 +15,7 @@ class RemindersController < ApplicationController
     @reminder = current_user.reminders.new(reminder_params)
 
     if @reminder.save
-      redirect_to reminders_path
+      redirect_to reminder_path(@reminder)
     else
       render :new
     end

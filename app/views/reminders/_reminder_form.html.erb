@@ -1,0 +1,75 @@
+<% if reminder.errors.present? %>
+  <ul>
+    <% reminder.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<%= form_with(model: reminder, local: true) do |f| %>
+  <div class="field is-grouped">
+    <div class="control"><strong>#</strong></div>
+    <div class="control">
+    <%= f.text_field :slack_channel_id,
+                        placeholder: 'channel',
+                        class: 'input',
+                        autocomplete: 'on',
+                        list: 'active_slack_channel_list' %>
+      <datalist id="active_slack_channel_list">
+        <%= options_for_select(active_slack_channel_list) %>
+      </datalist>
+    </div>
+    <div class="control">
+      <% unless reminder.new_record? %>
+        <div class="select">
+          <%= f.select :status, Reminder.status.values %>
+        </div>
+      <% end %>
+    </div>
+    <div class="control">
+      <label class="checkbox"><%= f.check_box :holiday_included %>祝日も通知する</label>
+    </div>
+  </div>
+  <div class="box">
+    <article class="media">
+      <div class="media-left">
+        <%= f.text_field :icon_emoji, placeholder: 'emoji', class: 'input', autocomplete: 'on', list: 'slack_emoji_list' %>
+        <datalist id="slack_emoji_list">
+          <%= options_for_select(slack_emoji_list) %>
+        </datalist>
+      </div>
+      <div class="media-content">
+        <div class="content">
+          <div class="field is-grouped">
+            <div class="control">
+              <%= f.text_field :icon_name, placeholder: 'お知らせくん', class: 'input' %>
+            </div>
+            <div class="control">
+              <div class="field is-grouped">
+                <label class="checkbox control"><%= f.check_box :monday_enabled %>月</label>
+                <label class="checkbox control"><%= f.check_box :tuesday_enabled %>火</label>
+                <label class="checkbox control"><%= f.check_box :wednesday_enabled %>水</label>
+                <label class="checkbox control"><%= f.check_box :thursday_enabled %>木</label>
+                <label class="checkbox control"><%= f.check_box :friday_enabled %>金</label>
+                <label class="checkbox control"><%= f.check_box :saturday_enabled %>土</label>
+                <label class="checkbox control"><%= f.check_box :sunday_enabled %>日</label>
+              </div>
+            </div>
+            <div class="control">
+              <div class="field is-grouped">
+                <div class="select control"><%= f.select :hour, (0..23).to_a %></div>
+                <div class="select control"><%= f.select :minute, (0..59).step(5).to_a %></div>
+              </div>
+            </div>
+          </div>
+          <%= f.text_area :message, class: 'textarea' %>
+        </div>
+      </div>
+    </article>
+  </div>
+  <div class="level">
+    <div class="level-item">
+      <%= f.submit nil, class: 'button is-primary'%>
+    </div>
+  </div>
+<% end %>

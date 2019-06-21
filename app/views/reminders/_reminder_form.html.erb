@@ -56,10 +56,15 @@
               </div>
             </div>
             <div class="control">
-              <div class="field is-grouped">
-                <div class="select control"><%= f.select :hour, (0..23).to_a %></div>
-                <div class="select control"><%= f.select :minute, (0..59).step(5).to_a %></div>
-              </div>
+              <%= f.text_field :scheduled_time,
+                               value: reminder.scheduled_time.try(:strftime, '%H:%M'),
+                               placeholder: '09:00',
+                               class: 'input',
+                               autocomplete: 'on',
+                               list: 'scheduled_time_list' %>
+              <datalist id="scheduled_time_list">
+                <%= options_for_select(Reminder.scheduled_time_list) %>
+              </datalist>
             </div>
           </div>
           <%= f.text_area :message, class: 'textarea' %>

@@ -1,4 +1,6 @@
 class Reminder < ApplicationRecord
+  SCHEDULE_TIME_STEP_MINUTES = 5
+
   extend Enumerize
 
   belongs_to :user
@@ -6,17 +8,12 @@ class Reminder < ApplicationRecord
 
   validates :slack_channel_id, presence: true
   validates :message, presence: true
-  validates :hour,
-            numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 23}
-  validates :minute,
-            numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 59}
   enumerize :status, in: { activated: 0, deactivated: 1, archived: 2 },
             default: :activated, predicates: true, scope: true
 
   # custom validations
   validate :validate_slack_channel_id_is_included_in_active_channel_list
-
-  after_validation :set_scheduled_time
+  validate :validate_scheduled_time_is_included_in_scheduled_time_list
 
   scope :from_latest, -> {order(created_at: :desc)}
   scope :holiday_included, -> {where(holiday_included: true)}
@@ -56,6 +53,20 @@ class Reminder < ApplicationRecord
       where(scheduled_time: from_time..to_time)
     end
   }
+
+  def self.scheduled_time_list
+    hour_list = (0..23).to_a
+    minute_list = (0..59).step(SCHEDULE_TIME_STEP_MINUTES)
+
+    scheduled_time_list = []
+    hour_list.each do |hour|
+      minute_list.each do |minute|
+        scheduled_time_list << format('%02d:%02d', hour, minute)
+      end
+    end
+
+    scheduled_time_list
+  end
 
   def enabled_day_of_weeks
     day_of_weeks = %i(monday tuesday wednesday thursday friday saturday sunday)
@@ -107,10 +118,6 @@ class Reminder < ApplicationRecord
     remind_logs.create!(params)
   end
 
-  def set_scheduled_time
-    self.scheduled_time = format("%02d:%02d", hour, minute)
-  end
-
   private
 
   def validate_slack_channel_id_is_included_in_active_channel_list
@@ -120,6 +127,12 @@ class Reminder < ApplicationRecord
 
     unless @active_slack_channel_ids.include?(slack_channel_id)
       errors.add(:slack_channel_id, 'is not included in active channel list')
+    end
+  end
+
+  def validate_scheduled_time_is_included_in_scheduled_time_list
+    unless Reminder.scheduled_time_list.include?(scheduled_time.try(:strftime, '%H:%M'))
+      errors.add(:scheduled_time, 'is not included in scheduled time list')
     end
   end
 end

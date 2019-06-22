@@ -9,12 +9,11 @@ class User < ApplicationRecord
   enumerize :role, in: {none: 0, admin: 1},
             default: :none, predicates: {prefix: true}, scope: true
 
-  def self.create_with!(authentication)
+  def self.create_with!(authentication, user_name)
     ApplicationRecord.transaction do
-      response = Slack::Web::Client.new(token: authentication.access_token).users_profile_get
       user_params = {
-        name: response.dig(:profile, :real_name),
-        avatar_url: response.dig(:profile, :image_192)
+        name: user_name,
+        avatar_url: nil
       }
       user = User.create!(user_params)
       authentication.user = user

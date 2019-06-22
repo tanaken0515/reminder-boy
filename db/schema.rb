@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_18_132912) do
+ActiveRecord::Schema.define(version: 2019_06_21_131501) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,8 +45,6 @@ ActiveRecord::Schema.define(version: 2019_06_18_132912) do
     t.string "icon_emoji"
     t.string "icon_name"
     t.string "message", null: false
-    t.integer "hour", null: false
-    t.integer "minute", null: false
     t.boolean "holiday_included", default: false, null: false
     t.integer "status", limit: 2, null: false
     t.boolean "monday_enabled", default: false, null: false

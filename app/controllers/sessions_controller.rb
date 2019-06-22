@@ -23,7 +23,7 @@ class SessionsController < ApplicationController
 
     if authentication.new_record?
       authentication.access_token = access_token
-      user = User.create_with!(authentication)
+      user = User.create_with!(authentication, response.dig(:user_id))
 
       login(user)
     else

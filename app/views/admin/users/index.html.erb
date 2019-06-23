@@ -21,13 +21,6 @@
         <td><%= user.id %></td>
         <td>
           <article class="media">
-            <% unless user.avatar_url.empty? %>
-              <div class="media-left">
-                <figure class="image is-32x32">
-                  <%= image_tag(user.avatar_url, alt: "user_#{user.id}_avatar_url") %>
-                </figure>
-              </div>
-            <% end %>
             <div class="media-content">
               <%= user.name %>
             </div>

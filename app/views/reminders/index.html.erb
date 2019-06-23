@@ -9,9 +9,6 @@
       <div class="level-item">
         <%= link_to 'New Reminder', new_reminder_path, class: 'button is-link' %>
       </div>
-      <div class="level-item">
-        <%= link_to 'Logs', remind_logs_path, class: 'button' %>
-      </div>
     </div>
   </div>
   <%= render(partial: 'reminder', collection: @reminders, as: :reminder, locals: {show_timestamps: false, show_links: true}) %>

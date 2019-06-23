@@ -5,11 +5,6 @@
         <p class="title">New Reminder</p>
       </div>
     </div>
-    <div class="level-right">
-      <div class="level-item">
-        <%= link_to 'Reminders', reminders_path, class: 'button' %>
-      </div>
-    </div>
   </div>
   <%= render partial: 'reminder_form', locals: { reminder: @reminder, slack_channel_list: @slack_channel_list } %>
 </section>

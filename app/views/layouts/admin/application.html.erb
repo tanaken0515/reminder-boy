@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>ReminderBoy</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
 
@@ -14,16 +15,18 @@
   <div class="container">
     <div class="navbar-brand">
       <%= link_to 'Admin::ReminderBoy', admin_root_path, style: 'text-decoration: none; font-size: xx-large;', class: "navbar-item" %>
+      <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="admin-navbar-menu">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
     </div>
-    <div class="navbar-menu">
+    <div id="admin-navbar-menu" class="navbar-menu">
       <div class="navbar-start">
-        <div class="navbar-item">
-          <div class="buttons">
-            <% if admin? %>
-              <%= link_to 'Sidekiq', admin_sidekiq_web_path, class: "button is-light", target: '_blank' %>
-            <% end %>
-          </div>
-        </div>
+        <% if admin? %>
+          <%= link_to 'Users', admin_users_path, class: "navbar-item #{current_page?(admin_users_path) ? 'is-active' : ''}" %>
+          <%= link_to 'Sidekiq', admin_sidekiq_web_path, class: "navbar-item #{current_page?(admin_sidekiq_web_path) ? 'is-active' : ''}" %>
+      <% end %>
       </div>
       <div class="navbar-end">
         <div class="navbar-item">

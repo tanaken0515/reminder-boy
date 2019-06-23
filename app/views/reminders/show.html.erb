@@ -5,11 +5,6 @@
         <p class="title">Reminder Detail</p>
       </div>
     </div>
-    <div class="level-right">
-      <div class="level-item">
-        <%= link_to 'Reminders', reminders_path, class: 'button' %>
-      </div>
-    </div>
   </div>
   <%= render(partial: 'reminder', locals: {reminder: @reminder, show_timestamps: true, show_links: false}) %>
   <div class="level">

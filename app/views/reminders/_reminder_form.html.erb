@@ -10,14 +10,9 @@
   <div class="field is-grouped">
     <div class="control"><strong>#</strong></div>
     <div class="control">
-    <%= f.text_field :slack_channel_id,
-                        placeholder: 'channel',
-                        class: 'input',
-                        autocomplete: 'on',
-                        list: 'active_slack_channel_list' %>
-      <datalist id="active_slack_channel_list">
-        <%= options_for_select(active_slack_channel_list) %>
-      </datalist>
+      <div class="select">
+        <%= f.select :slack_channel_id, active_slack_channel_list, include_blank: true %>
+      </div>
     </div>
     <div class="control">
       <% unless reminder.new_record? %>
@@ -56,15 +51,10 @@
               </div>
             </div>
             <div class="control">
-              <%= f.text_field :scheduled_time,
-                               value: reminder.scheduled_time.try(:strftime, '%H:%M'),
-                               placeholder: '09:00',
-                               class: 'input',
-                               autocomplete: 'on',
-                               list: 'scheduled_time_list' %>
-              <datalist id="scheduled_time_list">
-                <%= options_for_select(Reminder.scheduled_time_list) %>
-              </datalist>
+              <div class="select">
+                <%= f.select :scheduled_time,
+                             options_for_select(Reminder.scheduled_time_list, reminder.scheduled_time.try(:strftime, '%H:%M')) %>
+              </div>
             </div>
           </div>
           <%= f.text_area :message, class: 'textarea' %>

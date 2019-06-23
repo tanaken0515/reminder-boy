@@ -15,8 +15,13 @@
   <div class="container">
     <div class="navbar-brand">
       <%= link_to 'Admin::ReminderBoy', admin_root_path, style: 'text-decoration: none; font-size: xx-large;', class: "navbar-item" %>
+      <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="admin-navbar-menu">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
     </div>
-    <div class="navbar-menu">
+    <div id="admin-navbar-menu" class="navbar-menu">
       <div class="navbar-start">
         <div class="navbar-item">
           <div class="buttons">

@@ -2,12 +2,6 @@
   <div class="control"><strong><%= "#" + slack_channel_name(reminder) %></strong></div>
   <div class="control">
     <div class="tags has-addons">
-      <span class="tag">Status</span>
-      <span class="tag <%= css_class_status(reminder) %>"><%= reminder.status %></span>
-    </div>
-  </div>
-  <div class="control">
-    <div class="tags has-addons">
       <span class="tag">祝日の通知</span>
       <% if reminder.holiday_included? %>
         <span class="tag is-primary">ON</span>
@@ -17,7 +11,7 @@
     </div>
   </div>
 </div>
-<div class="box">
+<div class="box <%= css_class_status(reminder) %>">
   <article class="media">
     <div class="media-left">
       <figure class="image is-32x32">

@@ -16,18 +16,6 @@
       <% end %>
     </div>
   </div>
-  <% if show_timestamps %>
-    <div class="control">
-      <small>created at <%= reminder.created_at %></small>
-    </div>
-    <div class="control">
-      <small>updated at <%= reminder.updated_at %></small>
-    </div>
-  <% end %>
-  <% if show_links %>
-    <%= link_to(tag.span(tag.i(nil, class: 'fas fa-info-circle'), class: 'icon'), reminder_path(reminder)) %>
-    <%= link_to(tag.span(tag.i(nil, class: 'fas fa-edit'), class: 'icon'), edit_reminder_path(reminder)) %>
-  <% end %>
 </div>
 <div class="box">
   <article class="media">
@@ -43,7 +31,31 @@
         <small><%= reminder.scheduled_time.strftime("%H:%M") %></small>
         <br>
         <%= simple_format(h(reminder.message)) %>
+        <% if show_timestamps %>
+          <nav class="level is-mobile">
+            <div class="level-left">
+              <div class="level-item">
+                <small class="is-size-7">
+                  <span class="icon"><i class="fas fa-lightbulb"></i></span>
+                  <%= reminder.created_at.strftime("%Y-%m-%d %H:%M") %>
+                </small>
+              </div>
+              <div class="level-item">
+                <small class="is-size-7">
+                  <span class="icon"><i class="fas fa-wrench"></i></span>
+                  <%= reminder.updated_at.strftime("%Y-%m-%d %H:%M") %>
+                </small>
+              </div>
+            </div>
+          </nav>
+        <% end %>
       </div>
     </div>
+    <% if show_links %>
+      <div class="media-right">
+        <%= link_to(tag.span(tag.i(nil, class: 'fas fa-info-circle'), class: 'icon'), reminder_path(reminder)) %>
+        <%= link_to(tag.span(tag.i(nil, class: 'fas fa-edit'), class: 'icon'), edit_reminder_path(reminder)) %>
+      </div>
+    <% end %>
   </article>
 </div>

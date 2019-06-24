@@ -38,11 +38,11 @@ module RemindersHelper
 
   def css_class_status(reminder)
     if reminder.activated?
-      'is-primary'
+      ''
     elsif reminder.deactivated?
-      'has-background-grey-light'
+      'has-background-white-ter has-text-grey'
     else
-      'is-dark'
+      'has-background-grey-light has-text-grey'
     end
   end
 end

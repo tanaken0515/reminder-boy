@@ -7,64 +7,149 @@
 <% end %>
 
 <%= form_with(model: reminder, local: true) do |f| %>
-  <div class="field is-grouped">
-    <div class="control"><strong>#</strong></div>
-    <div class="control">
-      <div class="select">
-        <%= f.select :slack_channel_id, active_slack_channel_list, include_blank: true %>
-      </div>
+  <% #チャンネル %>
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <label class="label">Channel</label>
     </div>
-    <div class="control">
-      <% unless reminder.new_record? %>
-        <div class="select">
-          <%= f.select :status, Reminder.status.values %>
+    <div class="field-body">
+      <div class="field">
+        <div class="control">
+          <div class="select">
+            <%= f.select :slack_channel_id, active_slack_channel_list, include_blank: true %>
+          </div>
         </div>
-      <% end %>
-    </div>
-    <div class="control">
-      <label class="checkbox"><%= f.check_box :holiday_included %>祝日も通知する</label>
+      </div>
     </div>
   </div>
-  <div class="box">
-    <article class="media">
-      <div class="media-left">
-        <%= f.text_field :icon_emoji, placeholder: 'emoji', class: 'input', autocomplete: 'on', list: 'slack_emoji_list' %>
-        <datalist id="slack_emoji_list">
-          <%= options_for_select(slack_emoji_list) %>
-        </datalist>
-      </div>
-      <div class="media-content">
-        <div class="content">
-          <div class="field is-grouped">
-            <div class="control">
-              <%= f.text_field :icon_name, placeholder: 'お知らせくん', class: 'input' %>
-            </div>
-            <div class="control">
-              <div class="field is-grouped">
-                <label class="checkbox control"><%= f.check_box :monday_enabled %>月</label>
-                <label class="checkbox control"><%= f.check_box :tuesday_enabled %>火</label>
-                <label class="checkbox control"><%= f.check_box :wednesday_enabled %>水</label>
-                <label class="checkbox control"><%= f.check_box :thursday_enabled %>木</label>
-                <label class="checkbox control"><%= f.check_box :friday_enabled %>金</label>
-                <label class="checkbox control"><%= f.check_box :saturday_enabled %>土</label>
-                <label class="checkbox control"><%= f.check_box :sunday_enabled %>日</label>
-              </div>
-            </div>
-            <div class="control">
-              <div class="select">
-                <%= f.select :scheduled_time,
-                             options_for_select(Reminder.scheduled_time_list, reminder.scheduled_time.try(:strftime, '%H:%M')) %>
-              </div>
-            </div>
+
+  <% #曜日 %>
+  <div class="field is-horizontal">
+    <div class="field-label">
+      <label class="label">Day of Week</label>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <div class="control">
+          <div class="field is-grouped is-grouped-multiline">
+            <label class="checkbox control"><%= f.check_box :monday_enabled %> 月</label>
+            <label class="checkbox control"><%= f.check_box :tuesday_enabled %> 火</label>
+            <label class="checkbox control"><%= f.check_box :wednesday_enabled %> 水</label>
+            <label class="checkbox control"><%= f.check_box :thursday_enabled %> 木</label>
+            <label class="checkbox control"><%= f.check_box :friday_enabled %> 金</label>
+            <label class="checkbox control"><%= f.check_box :saturday_enabled %> 土</label>
+            <label class="checkbox control"><%= f.check_box :sunday_enabled %> 日</label>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <% #時刻 %>
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <label class="label">Time</label>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <div class="control">
+          <div class="select">
+            <%= f.select :scheduled_time,
+                         options_for_select(Reminder.scheduled_time_list, reminder.scheduled_time.try(:strftime, '%H:%M')) %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <% #アイコン %>
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <label class="label">Icon</label>
+    </div>
+    <div class="field-body">
+      <div class="field is-narrow">
+        <p class="control has-icons-left">
+          <%= f.text_field :icon_emoji, placeholder: 'emoji', class: 'input', autocomplete: 'on', list: 'slack_emoji_list' %>
+          <datalist id="slack_emoji_list">
+            <%= options_for_select(slack_emoji_list) %>
+          </datalist>
+          <span class="icon is-small is-left">
+            <i class="fas fa-smile"></i>
+          </span>
+        </p>
+      </div>
+      <div class="field is-narrow">
+        <p class="control has-icons-left">
+          <%= f.text_field :icon_name, placeholder: 'ReminderBoy', class: 'input' %>
+          <span class="icon is-small is-left">
+            <i class="fas fa-user"></i>
+          </span>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <% #メッセージ %>
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <label class="label">Message</label>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <div class="control">
           <%= f.text_area :message, class: 'textarea' %>
         </div>
       </div>
-    </article>
+    </div>
   </div>
-  <div class="level">
-    <div class="level-item">
-      <%= f.submit nil, class: 'button is-primary'%>
+
+  <% #祝日を含む %>
+  <div class="field is-horizontal">
+    <div class="field-label">
+      <label class="label"></label>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <div class="control">
+          <label class="checkbox">
+            <%= f.check_box :holiday_included %>
+            祝日も通知する
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <% unless reminder.new_record? %>
+    <% #ステータス %>
+    <div class="field is-horizontal">
+      <div class="field-label is-normal">
+        <label class="label">Status</label>
+      </div>
+      <div class="field-body">
+        <div class="field">
+          <div class="control">
+            <div class="select">
+              <%= f.select :status, Reminder.status.values %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <% #Submit %>
+  <div class="field is-horizontal">
+    <div class="field-label">
+      <label class="label"></label>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <div class="control">
+          <%= f.submit nil, class: 'button is-primary'%>
+        </div>
+      </div>
     </div>
   </div>
 <% end %>

@@ -1,6 +1,4 @@
 class Reminder < ApplicationRecord
-  SCHEDULE_TIME_STEP_MINUTES = 5
-
   extend Enumerize
 
   belongs_to :user
@@ -56,7 +54,7 @@ class Reminder < ApplicationRecord
 
   def self.scheduled_time_list
     hour_list = (0..23).to_a
-    minute_list = (0..59).step(SCHEDULE_TIME_STEP_MINUTES)
+    minute_list = (0..59).step(5)
 
     scheduled_time_list = []
     hour_list.each do |hour|
@@ -65,7 +63,7 @@ class Reminder < ApplicationRecord
       end
     end
 
-    scheduled_time_list
+    scheduled_time_list.map(&:freeze).freeze
   end
 
   def enabled_day_of_weeks

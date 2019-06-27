@@ -11,7 +11,7 @@ RSpec.describe User, type: :model do
     end
 
     it 'Authenticationが作られること' do
-      skip 'wip'
+      expect(new_user.authentications.first).to eq authentication
     end
   end
 end

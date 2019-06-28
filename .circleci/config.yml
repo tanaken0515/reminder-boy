@@ -1,0 +1,40 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/ruby:2.6.3
+        environment:
+          RAILS_ENV: test
+          PGHOST: 127.0.0.1
+          PGUSER: circleci
+      - image: circleci/postgres:10.5-alpine
+        environment:
+          POSTGRES_USER: circleci
+          POSTGRES_DB: reminder-boy_test
+
+    working_directory: ~/reminder-boy
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "Gemfile.lock" }}
+            - v1-dependencies-
+
+      - run:
+          name: install dependencies
+          command: |
+            bundle install --jobs=4 --retry=3 --path vendor/bundle
+
+      - save_cache:
+          paths:
+            - ./vendor/bundle
+          key: v1-dependencies-{{ checksum "Gemfile.lock" }}
+
+      - run:
+          name: Database Setup
+          command: bundle exec rake db:setup
+
+      - run:
+          name: rspec
+          command: bundle exec rspec

@@ -185,20 +185,217 @@ RSpec.describe Reminder, type: :model do
     end
   end
 
-  xdescribe '#enabled_day_of_weeks' do
+  describe 'day_of_weeks' do
+    let(:reminder) { create(:reminder, **day_of_week_params, user: user) }
+    let(:day_of_week_params) do
+      {
+        sunday_enabled: false,
+        monday_enabled: false,
+        tuesday_enabled: false,
+        wednesday_enabled: false,
+        thursday_enabled: false,
+        friday_enabled: false,
+        saturday_enabled: false
+      }
+    end
+    let(:user) { create(:user_with_authentication) }
+    before do
+      allow(user).to receive(:slack_client).and_return(slack_client_mock)
+    end
 
-  end
+    describe '#enabled_day_of_weeks' do
+      context 'すべての曜日がOFFの場合' do
+        it '空配列がreturnされること' do
+          expect(reminder.enabled_day_of_weeks).to be_empty
+        end
+      end
 
-  xdescribe '#everyday?' do
+      context 'すべての曜日がONの場合' do
+        let(:day_of_week_params) do
+          {
+            sunday_enabled: true,
+            monday_enabled: true,
+            tuesday_enabled: true,
+            wednesday_enabled: true,
+            thursday_enabled: true,
+            friday_enabled: true,
+            saturday_enabled: true
+          }
+        end
 
-  end
+        it 'すべての曜日が入った配列がreturnされること' do
+          expect(reminder.enabled_day_of_weeks).to eq %i(monday tuesday wednesday thursday friday saturday sunday)
+        end
+      end
 
-  xdescribe '#weekday?' do
+      context 'いくつかの曜日がONの場合' do
+        let(:day_of_week_params) do
+          {
+            sunday_enabled: true,
+            monday_enabled: false,
+            tuesday_enabled: true,
+            wednesday_enabled: false,
+            thursday_enabled: true,
+            friday_enabled: true,
+            saturday_enabled: false
+          }
+        end
 
-  end
+        it 'ONの曜日が入った配列がreturnされること' do
+          expect(reminder.enabled_day_of_weeks).to eq %i(tuesday thursday friday sunday)
+        end
+      end
+    end
 
-  xdescribe '#holiday?' do
+    describe '#everyday?' do
+      context 'すべての曜日がONの場合' do
+        let(:day_of_week_params) do
+          {
+            sunday_enabled: true,
+            monday_enabled: true,
+            tuesday_enabled: true,
+            wednesday_enabled: true,
+            thursday_enabled: true,
+            friday_enabled: true,
+            saturday_enabled: true
+          }
+        end
 
+        it 'true' do
+          expect(reminder.everyday?).to be true
+        end
+      end
+
+      context 'ONではない曜日もある場合' do
+        let(:day_of_week_params) do
+          {
+            sunday_enabled: true,
+            monday_enabled: false,
+            tuesday_enabled: true,
+            wednesday_enabled: false,
+            thursday_enabled: true,
+            friday_enabled: true,
+            saturday_enabled: false
+          }
+        end
+
+        it 'false' do
+          expect(reminder.everyday?).to be false
+        end
+      end
+    end
+
+    describe '#weekday?' do
+      context '月火水木金がONの場合' do
+        let(:day_of_week_params) do
+          {
+            sunday_enabled: false,
+            monday_enabled: true,
+            tuesday_enabled: true,
+            wednesday_enabled: true,
+            thursday_enabled: true,
+            friday_enabled: true,
+            saturday_enabled: false
+          }
+        end
+
+        it 'true' do
+          expect(reminder.weekday?).to be true
+        end
+      end
+
+      context '月火水木金のどれかにOFFがある場合' do
+        let(:day_of_week_params) do
+          {
+            sunday_enabled: false,
+            monday_enabled: true,
+            tuesday_enabled: true,
+            wednesday_enabled: true,
+            thursday_enabled: true,
+            friday_enabled: false,
+            saturday_enabled: false
+          }
+        end
+
+        it 'false' do
+          expect(reminder.weekday?).to be false
+        end
+      end
+
+      context '月火水木金の他にONがある場合' do
+        let(:day_of_week_params) do
+          {
+            sunday_enabled: true,
+            monday_enabled: true,
+            tuesday_enabled: true,
+            wednesday_enabled: true,
+            thursday_enabled: true,
+            friday_enabled: true,
+            saturday_enabled: false
+          }
+        end
+
+        it 'false' do
+          expect(reminder.weekday?).to be false
+        end
+      end
+    end
+
+    describe '#holiday?' do
+      context '土日がONの場合' do
+        let(:day_of_week_params) do
+          {
+            sunday_enabled: true,
+            monday_enabled: false,
+            tuesday_enabled: false,
+            wednesday_enabled: false,
+            thursday_enabled: false,
+            friday_enabled: false,
+            saturday_enabled: true
+          }
+        end
+
+        it 'true' do
+          expect(reminder.holiday?).to be true
+        end
+      end
+
+      context '土日のどれかにOFFがある場合' do
+        let(:day_of_week_params) do
+          {
+            sunday_enabled: false,
+            monday_enabled: false,
+            tuesday_enabled: false,
+            wednesday_enabled: false,
+            thursday_enabled: false,
+            friday_enabled: false,
+            saturday_enabled: true
+          }
+        end
+
+        it 'false' do
+          expect(reminder.holiday?).to be false
+        end
+      end
+
+      context '土日の他にONがある場合' do
+        let(:day_of_week_params) do
+          {
+            sunday_enabled: true,
+            monday_enabled: false,
+            tuesday_enabled: false,
+            wednesday_enabled: true,
+            thursday_enabled: false,
+            friday_enabled: false,
+            saturday_enabled: true
+          }
+        end
+
+        it 'false' do
+          expect(reminder.holiday?).to be false
+        end
+      end
+    end
   end
 
   xdescribe '#post' do

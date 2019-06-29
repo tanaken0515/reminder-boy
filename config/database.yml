@@ -12,6 +12,7 @@ development:
 
 test:
   <<: *default
+  host: <%= ENV["CI"] ? "127.0.0.1" : "database" %>
   database: reminder-boy_test
 
 production:

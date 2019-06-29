@@ -16,7 +16,7 @@ RSpec.describe Reminder, type: :model do
       Slack::Messages::Message.new(id: 'C*****4', name: 'ch4', is_archived: false),
     ]
 
-    Slack::Messages::Message.new(ok: true, channles: channels)
+    Slack::Messages::Message.new(ok: true, channels: channels)
   end
 
   let(:chat_postMessage_response) do

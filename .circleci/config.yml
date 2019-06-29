@@ -6,10 +6,10 @@ jobs:
         environment:
           RAILS_ENV: test
           PGHOST: 127.0.0.1
-          PGUSER: circleci
+          PGUSER: postgres
       - image: circleci/postgres:10.5-alpine
         environment:
-          POSTGRES_USER: circleci
+          POSTGRES_USER: postgres
           POSTGRES_DB: reminder-boy_test
 
     working_directory: ~/reminder-boy

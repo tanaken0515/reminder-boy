@@ -31,8 +31,8 @@ RSpec.describe Reminder, type: :model do
   end
 
   describe '#valid?' do
-    let(:authentication) { build(:authentication) }
-    let(:user) { User.create_with!(authentication, 'Tom') }
+    let(:authentication) { create(:authentication) }
+    let(:user) { authentication.user }
     let(:slack_channel_id) { 'C*****1' }
     let(:scheduled_time) { '09:00' }
     let(:reminder) { user.reminders.new(message: 'test', slack_channel_id: slack_channel_id, scheduled_time: scheduled_time) }

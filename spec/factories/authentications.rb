@@ -3,7 +3,8 @@ FactoryBot.define do
     slack_workspace_id {'T*****'}
     slack_user_id {'U*****'}
     access_token {'xoxp-******'}
-    user {nil}
+
+    association :user
   end
 end
 

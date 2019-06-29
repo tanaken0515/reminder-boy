@@ -398,11 +398,38 @@ RSpec.describe Reminder, type: :model do
     end
   end
 
-  xdescribe '#post' do
+  describe '#post' do
+    let(:reminder) { create(:reminder, user: user) }
+    let(:user) { create(:user_with_authentication) }
+    before do
+      allow(user).to receive(:slack_client).and_return(slack_client_mock)
+    end
 
+    it 'SlackAPIのchat_postMessageメソッドが呼ばれること' do
+      expect(slack_client_mock).to receive(:chat_postMessage)
+      reminder.post
+    end
   end
 
-  xdescribe '#remind!' do
+  describe '#remind!' do
+    let(:reminder) { create(:reminder, user: user) }
+    let(:user) { create(:user_with_authentication) }
+    before do
+      allow(user).to receive(:slack_client).and_return(slack_client_mock)
+    end
 
+    it 'SlackAPIのchat_postMessageメソッドが呼ばれること' do
+      expect(slack_client_mock).to receive(:chat_postMessage)
+      reminder.remind!
+    end
+
+    it 'SlackAPIのchat_getPermalinkメソッドが呼ばれること' do
+      expect(slack_client_mock).to receive(:chat_getPermalink)
+      reminder.remind!
+    end
+
+    it 'RemindLogが作られること' do
+      expect{ reminder.remind! }.to change{ RemindLog.count }.from(0).to(1)
+    end
   end
 end

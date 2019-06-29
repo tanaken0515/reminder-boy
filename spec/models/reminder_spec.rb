@@ -30,6 +30,52 @@ RSpec.describe Reminder, type: :model do
     Slack::Messages::Message.new(ok: true, permalink: 'https://*****.slack.com/archives/C*****/p*****')
   end
 
+  describe '#valid?' do
+    let(:authentication) { build(:authentication) }
+    let(:user) { User.create_with!(authentication, 'Tom') }
+    let(:slack_channel_id) { 'C*****1' }
+    let(:scheduled_time) { '09:00' }
+    let(:reminder) { user.reminders.new(message: 'test', slack_channel_id: slack_channel_id, scheduled_time: scheduled_time) }
+
+    before do
+      allow(user).to receive(:slack_client).and_return(slack_client_mock)
+    end
+
+    describe 'slack_channel_id' do
+      context 'チャンネルリストに含まれている場合' do
+        it 'true' do
+          expect(reminder.valid?).to be true
+        end
+      end
+
+      context 'チャンネルリストに含まれていない場合' do
+        let(:slack_channel_id) { 'C*****3' }
+
+        it 'false' do
+          expect(reminder.valid?).to be false
+          expect(reminder.errors.messages[:slack_channel_id].include?('is not included in active channel list')).to be true
+        end
+      end
+    end
+
+    describe 'scheduled_time' do
+      context '時刻リストに含まれている場合' do
+        it 'true' do
+          expect(reminder.valid?).to be true
+        end
+      end
+
+      context '時刻リストに含まれていない場合' do
+        let(:scheduled_time) { '09:01' }
+
+        it 'false' do
+          expect(reminder.valid?).to be false
+          expect(reminder.errors.messages[:scheduled_time].include?('is not included in scheduled time list')).to be true
+        end
+      end
+    end
+  end
+
   xdescribe 'scopes' do
     before do
       'create some reminders'

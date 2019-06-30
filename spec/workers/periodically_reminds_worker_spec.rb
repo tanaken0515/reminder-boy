@@ -24,68 +24,74 @@ RSpec.describe PeriodicallyRemindsWorker, type: :worker do
     end
   end
 
+  subject do
+    Timecop.freeze(Time.zone.parse(execution_time)) do
+      PeriodicallyRemindsWorker.new.perform
+    end
+  end
+
   context '異なるタイムゾーンで日付が異なる場合' do
     context 'UTCの月曜日の23:00(= 日本時間の火曜日の08:00)に実行すると' do
-      before do
-        # time freeze
-      end
+      let(:execution_time){ '2019-06-24 23:00:00' }
 
-      it '@reminder_at_2300_utc がリマインドされること' do
-        skip 'Not implemented'
+      it '@reminder_at_2300_utc がリマインドされ、 @reminder_at_0800_jp がリマインドされないこと' do
+        subject
+        expect(RemindWorker).to have_enqueued_sidekiq_job(@reminder_at_2300_utc.id)
+        expect(RemindWorker).not_to have_enqueued_sidekiq_job(@reminder_at_0800_jp.id)
       end
     end
 
     context 'UTCの日曜日の23:00(= 日本時間の月曜日の08:00)に実行すると' do
-      before do
-        # time freeze
-      end
+      let(:execution_time){ '2019-06-23 23:00:00' }
 
-      it '@reminder_at_0800_jp がリマインドされること' do
-        skip 'Not implemented'
+      it '@reminder_at_2300_utc がリマインドされず、 @reminder_at_0800_jp がリマインドされること' do
+        subject
+        expect(RemindWorker).not_to have_enqueued_sidekiq_job(@reminder_at_2300_utc.id)
+        expect(RemindWorker).to have_enqueued_sidekiq_job(@reminder_at_0800_jp.id)
       end
     end
   end
 
   context '異なるタイムゾーンで日付の境目の場合' do
     context 'UTCの月曜日の00:00(= 日本時間の月曜日の09:00)に実行すると' do
-      before do
-        # time freeze
-      end
+      let(:execution_time){ '2019-06-24 00:00:00' }
 
-      it '@reminder_at_2400_utc, @reminder_at_0900_jp がリマインドされること' do
-        skip 'Not implemented'
+      it '@reminder_at_0000_utc, @reminder_at_0900_jp がリマインドされること' do
+        subject
+        expect(RemindWorker).to have_enqueued_sidekiq_job(@reminder_at_0000_utc.id)
+        expect(RemindWorker).to have_enqueued_sidekiq_job(@reminder_at_0900_jp.id)
       end
     end
 
     context 'UTCの火曜日の00:00(= 日本時間の火曜日の09:00)に実行すると' do
-      before do
-        # time freeze
-      end
+      let(:execution_time){ '2019-06-25 00:00:00' }
 
-      it 'リマインドされないこと' do
-        skip 'Not implemented'
+      it '@reminder_at_0000_utc, @reminder_at_0900_jp がリマインドされないこと' do
+        subject
+        expect(RemindWorker).not_to have_enqueued_sidekiq_job(@reminder_at_0000_utc.id)
+        expect(RemindWorker).not_to have_enqueued_sidekiq_job(@reminder_at_0900_jp.id)
       end
     end
   end
 
   context '異なるタイムゾーンで日付が同じの場合' do
     context 'UTCの月曜日の01:00(= 日本時間の月曜日の10:00)に実行すると' do
-      before do
-        # time freeze
-      end
+      let(:execution_time){ '2019-06-24 01:00:00' }
 
       it '@reminder_at_0100_utc, @reminder_at_1000_jp がリマインドされること' do
-        skip 'Not implemented'
+        subject
+        expect(RemindWorker).to have_enqueued_sidekiq_job(@reminder_at_0100_utc.id)
+        expect(RemindWorker).to have_enqueued_sidekiq_job(@reminder_at_1000_jp.id)
       end
     end
 
     context 'UTCの火曜日の01:00(= 日本時間の火曜日の10:00)に実行すると' do
-      before do
-        # time freeze
-      end
+      let(:execution_time){ '2019-06-25 01:00:00' }
 
-      it 'リマインドされないこと' do
-        skip 'Not implemented'
+      it '@reminder_at_0100_utc, @reminder_at_1000_jp がリマインドされないこと' do
+        subject
+        expect(RemindWorker).not_to have_enqueued_sidekiq_job(@reminder_at_0100_utc.id)
+        expect(RemindWorker).not_to have_enqueued_sidekiq_job(@reminder_at_1000_jp.id)
       end
     end
   end

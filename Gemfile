@@ -37,6 +37,8 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'dotenv-rails'
   gem "rspec-rails"
+  gem 'timecop'
+  gem 'rspec-sidekiq'
   gem 'factory_bot_rails'
 end
 

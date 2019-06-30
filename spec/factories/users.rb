@@ -1,6 +1,7 @@
 FactoryBot.define do
   factory :user do
     name { 'taro' }
+    time_zone { 'Asia/Tokyo' }
 
     factory :user_with_authentication do
       after(:create) do |user|

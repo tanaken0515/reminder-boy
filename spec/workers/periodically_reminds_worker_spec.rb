@@ -3,22 +3,22 @@ require 'rails_helper'
 RSpec.describe PeriodicallyRemindsWorker, type: :worker do
   include_context 'make_slack_client_mock_available'
 
-  let(:user01) { create(:user_with_authentication, time_zone: 'UTC') }
-  let(:user02) { create(:user_with_authentication, time_zone: 'Asia/Tokyo') }
+  let(:utc_user) { create(:user_with_authentication, time_zone: 'UTC') }
+  let(:jp_user) { create(:user_with_authentication, time_zone: 'Asia/Tokyo') }
 
   before do
-    allow(user01).to receive(:slack_client).and_return(slack_client_mock)
-    Time.use_zone(user01.time_zone) do
-      @reminder_at_2300_utc = create(:reminder, monday_enabled: true, scheduled_time: '23:00', user: user02)
-      @reminder_at_0000_utc = create(:reminder, monday_enabled: true, scheduled_time: '00:00', user: user02)
-      @reminder_at_0100_utc = create(:reminder, monday_enabled: true, scheduled_time: '01:00', user: user02)
+    allow(utc_user).to receive(:slack_client).and_return(slack_client_mock)
+    Time.use_zone(utc_user.time_zone) do
+      @reminder_at_2300_utc = create(:reminder, monday_enabled: true, scheduled_time: '23:00', user: utc_user)
+      @reminder_at_0000_utc = create(:reminder, monday_enabled: true, scheduled_time: '00:00', user: utc_user)
+      @reminder_at_0100_utc = create(:reminder, monday_enabled: true, scheduled_time: '01:00', user: utc_user)
     end
 
-    allow(user02).to receive(:slack_client).and_return(slack_client_mock)
-    Time.use_zone(user02.time_zone) do
-      @reminder_at_0800_jp = create(:reminder, monday_enabled: true, scheduled_time: '08:00', user: user01)
-      @reminder_at_0900_jp = create(:reminder, monday_enabled: true, scheduled_time: '09:00', user: user01)
-      @reminder_at_1000_jp = create(:reminder, monday_enabled: true, scheduled_time: '10:00', user: user01)
+    allow(jp_user).to receive(:slack_client).and_return(slack_client_mock)
+    Time.use_zone(jp_user.time_zone) do
+      @reminder_at_0800_jp = create(:reminder, monday_enabled: true, scheduled_time: '08:00', user: jp_user)
+      @reminder_at_0900_jp = create(:reminder, monday_enabled: true, scheduled_time: '09:00', user: jp_user)
+      @reminder_at_1000_jp = create(:reminder, monday_enabled: true, scheduled_time: '10:00', user: jp_user)
     end
   end
 

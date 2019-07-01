@@ -6,4 +6,37 @@
       </div>
     </div>
   </div>
+  <%= form_with(url: account_settings_path, model: @user, local: true) do |f| %>
+    <% #タイムゾーン %>
+    <div class="field is-horizontal">
+      <div class="field-label is-normal">
+        <label class="label">Time Zone</label>
+      </div>
+      <div class="field-body">
+        <div class="field">
+          <div class="control">
+            <div class="select">
+              <%= f.select :time_zone,
+                           options_for_select(time_zone_options, @user.time_zone),
+                           include_blank: true %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <% #Submit %>
+    <div class="field is-horizontal">
+      <div class="field-label">
+        <label class="label"></label>
+      </div>
+      <div class="field-body">
+        <div class="field">
+          <div class="control">
+            <%= f.submit 'Save', class: 'button is-primary'%>
+          </div>
+        </div>
+      </div>
+    </div>
+<% end %>
 </section>

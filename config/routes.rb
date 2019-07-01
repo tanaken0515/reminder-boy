@@ -25,7 +25,7 @@ Rails.application.routes.draw do
   resources :remind_logs, only: [:index]
 
   namespace :account do
-    resource :settings, only: [:show]
+    resource :settings, only: [:show, :update]
   end
 
   namespace :admin do

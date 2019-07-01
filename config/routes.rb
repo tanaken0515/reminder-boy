@@ -24,6 +24,10 @@ Rails.application.routes.draw do
 
   resources :remind_logs, only: [:index]
 
+  namespace :account do
+    resource :settings, only: [:show]
+  end
+
   namespace :admin do
     resources :users, only: [:index]
     mount Sidekiq::Web => '/sidekiq', constraints: AdminConstraint.new

@@ -29,11 +29,28 @@
       <% end %>
       </div>
       <div class="navbar-end">
-        <div class="navbar-item">
-          <div class="buttons">
-            <% if admin? %>
-              <%= link_to 'To User', root_path, class: "button is-info" %>
-              <%= link_to 'Logout', logout_path, method: :delete, class: "button is-light"  %>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link is-arrowless">
+            <div class="is-hidden-touch">
+              <span class="icon"><i class="fas fa-user fa-2x"></i></span>
+            </div>
+            <div class="is-hidden-desktop">
+              <span class="icon"><i class="fas fa-user"></i></span>
+              Account
+            </div>
+          </a>
+
+          <div class="navbar-dropdown is-right">
+            <% if user? %>
+              <%= link_to tag.span(tag.i(nil, class: 'fas fa-cog'), class: 'icon') + 'Settings',
+                          account_settings_path, class: "navbar-item"  %>
+              <hr class="navbar-divider">
+              <% if admin? %>
+                <%= link_to tag.span(tag.i(nil, class: 'fas fa-smile'), class: 'icon') + 'To User',
+                            root_path, class: "navbar-item has-text-info" %>
+                <%= link_to tag.span(tag.i(nil, class: 'fas fa-sign-out-alt'), class: 'icon') + 'Logout',
+                            logout_path, method: :delete, class: "navbar-item"  %>
+              <% end %>
             <% end %>
           </div>
         </div>

@@ -6,7 +6,7 @@ class Account::SettingsController < ApplicationController
 
   def update
     if @user.update(user_params)
-      redirect_to account_settings_path
+      redirect_to account_settings_path, notice: 'Saved'
     else
       render :show
     end

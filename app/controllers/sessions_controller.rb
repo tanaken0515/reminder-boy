@@ -7,8 +7,8 @@ class SessionsController < ApplicationController
 
   def create
     if params.include?(:error)
-      message = (params[:error] == 'access_denied') ? 'キャンセルされました' : 'エラーが発生しました'
-      redirect_to login_url, notice: message
+      message = (params[:error] == 'access_denied') ? 'Canceled' : 'Error'
+      redirect_to login_url, alert: message
       return
     end
 

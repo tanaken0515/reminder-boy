@@ -22,10 +22,12 @@
           </a>
         </div>
         <div id="user-navbar-menu" class="navbar-menu">
-          <div class="navbar-start">
-            <%= link_to 'Reminders', reminders_path, class: "navbar-item #{current_page?(reminders_path) ? 'is-active' : ''}" %>
-            <%= link_to 'RemindLogs', remind_logs_path, class: "navbar-item #{current_page?(remind_logs_path) ? 'is-active' : ''}" %>
-          </div>
+          <% if user? %>
+            <div class="navbar-start">
+              <%= link_to 'Reminders', reminders_path, class: "navbar-item #{current_page?(reminders_path) ? 'is-active' : ''}" %>
+              <%= link_to 'RemindLogs', remind_logs_path, class: "navbar-item #{current_page?(remind_logs_path) ? 'is-active' : ''}" %>
+            </div>
+          <% end %>
           <div class="navbar-end">
             <div class="navbar-item has-dropdown is-hoverable">
               <a class="navbar-link is-arrowless">

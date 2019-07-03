@@ -6,6 +6,7 @@
       </div>
     </div>
   </div>
+  <%= render "shared/flash" %>
   <%= form_with(url: account_settings_path, model: @user, local: true) do |f| %>
     <% #タイムゾーン %>
     <div class="field is-horizontal">

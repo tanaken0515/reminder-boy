@@ -6,9 +6,8 @@
   </ul>
 <% end %>
 
-<%= form_with(scope: :thread_reminder,
+<%= form_with(model: thread_reminder,
               url: thread_reminder.new_record? ? reminder_thread_reminders_path(reminder) : reminder_thread_reminder_path(reminder, thread_reminder),
-              method: thread_reminder.new_record? ? :post : :put,
               local: true) do |f| %>
   <% #曜日 %>
   <div class="field is-horizontal">

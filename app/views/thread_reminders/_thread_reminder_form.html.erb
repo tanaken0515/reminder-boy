@@ -6,7 +6,7 @@
   </ul>
 <% end %>
 
-<%= form_with(model: thread_reminder, local: true) do |f| %>
+<%= form_with(scope: :thread_reminder, url: reminder_thread_reminders_path, local: true) do |f| %>
   <% #曜日 %>
   <div class="field is-horizontal">
     <div class="field-label">

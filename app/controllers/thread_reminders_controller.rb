@@ -18,7 +18,7 @@ class ThreadRemindersController < ApplicationController
   private
 
   def set_reminder
-    @reminder = current_user.reminders.find(params[:id])
+    @reminder = current_user.reminders.find(params[:reminder_id])
   end
 
   def thread_reminder_params

@@ -17,6 +17,8 @@ Rails.application.routes.draw do
   root to: 'reminders#index'
 
   resources :reminders do
+    resources :thread_reminders, only: [:new, :create, :edit, :update]
+
     member do
       put 'post_message', to: 'reminders#post_message'
     end

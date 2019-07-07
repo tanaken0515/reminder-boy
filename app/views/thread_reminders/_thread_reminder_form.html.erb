@@ -1,0 +1,158 @@
+<% if thread_reminder.errors.present? %>
+  <ul>
+    <% thread_reminder.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<%= form_with(model: thread_reminder,
+              url: thread_reminder.new_record? ? reminder_thread_reminders_path(reminder) : reminder_thread_reminder_path(reminder, thread_reminder),
+              local: true) do |f| %>
+  <% #曜日 %>
+  <div class="field is-horizontal">
+    <div class="field-label">
+      <label class="label">Day of Week</label>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <div class="control">
+          <div class="field is-grouped is-grouped-multiline">
+            <label class="checkbox control"><%= f.check_box :monday_enabled %> 月</label>
+            <label class="checkbox control"><%= f.check_box :tuesday_enabled %> 火</label>
+            <label class="checkbox control"><%= f.check_box :wednesday_enabled %> 水</label>
+            <label class="checkbox control"><%= f.check_box :thursday_enabled %> 木</label>
+            <label class="checkbox control"><%= f.check_box :friday_enabled %> 金</label>
+            <label class="checkbox control"><%= f.check_box :saturday_enabled %> 土</label>
+            <label class="checkbox control"><%= f.check_box :sunday_enabled %> 日</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <% #時刻 %>
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <label class="label">Time</label>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <div class="control">
+          <div class="select">
+            <%= f.select :scheduled_time,
+                         options_for_select(ThreadReminder.scheduled_time_list, thread_reminder.scheduled_time.try(:strftime, '%H:%M')) %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <% #アイコン %>
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <label class="label">Icon</label>
+    </div>
+    <div class="field-body">
+      <div class="field is-narrow">
+        <p class="control has-icons-left">
+          <%= f.text_field :icon_emoji, placeholder: 'emoji', class: 'input', autocomplete: 'on', list: 'slack_emoji_list' %>
+          <datalist id="slack_emoji_list">
+            <%= options_for_select(slack_emoji_list) %>
+          </datalist>
+          <span class="icon is-small is-left">
+            <i class="fas fa-smile"></i>
+          </span>
+        </p>
+      </div>
+      <div class="field is-narrow">
+        <p class="control has-icons-left">
+          <%= f.text_field :icon_name, placeholder: 'ReminderBoy', class: 'input' %>
+          <span class="icon is-small is-left">
+            <i class="fas fa-user"></i>
+          </span>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <% #メッセージ %>
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <label class="label">Message</label>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <div class="control">
+          <%= f.text_area :message, class: 'textarea' %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <% #チャンネルにも通知する %>
+  <div class="field is-horizontal">
+    <div class="field-label">
+      <label class="label"></label>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <div class="control">
+          <label class="checkbox">
+            <%= f.check_box :also_send_to_channel %>
+            チャンネルにも通知する
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <% #祝日を含む %>
+  <div class="field is-horizontal">
+    <div class="field-label">
+      <label class="label"></label>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <div class="control">
+          <label class="checkbox">
+            <%= f.check_box :holiday_included %>
+            祝日も通知する
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <% unless thread_reminder.new_record? %>
+    <% #ステータス %>
+    <div class="field is-horizontal">
+      <div class="field-label is-normal">
+        <label class="label">Status</label>
+      </div>
+      <div class="field-body">
+        <div class="field">
+          <div class="control">
+            <div class="select">
+              <%= f.select :status, ThreadReminder.status.values %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <% #Submit %>
+  <div class="field is-horizontal">
+    <div class="field-label">
+      <label class="label"></label>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <div class="control">
+          <%= f.submit nil, class: 'button is-primary'%>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

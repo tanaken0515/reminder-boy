@@ -44,6 +44,19 @@
           </nav>
         <% end %>
       </div>
+      <% if show_thread_reminders %>
+        <%= render(partial: 'thread_reminder',
+                   collection: reminder.thread_reminders, as: :thread_reminder,
+                   locals: {reminder: reminder}) %>
+        <br/>
+        <nav class="level is-mobile">
+          <div class="level-left">
+            <div class="level-item">
+              <%= link_to(tag.span(tag.i(nil, class: 'fas fa-plus-circle'), class: 'icon') + 'New Thread Reminder', new_reminder_thread_reminder_path(reminder)) %>
+            </div>
+          </div>
+        </nav>
+      <% end %>
     </div>
     <% if show_links %>
       <div class="media-right">

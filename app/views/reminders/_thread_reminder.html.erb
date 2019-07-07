@@ -1,0 +1,19 @@
+<article class="media">
+  <div class="media-left">
+    <figure class="image is-32x32">
+      <%= image_tag(slack_emoji_url(thread_reminder), alt: "emoji_#{thread_reminder.icon_emoji}") %>
+    </figure>
+  </div>
+  <div class="media-content">
+    <div class="content">
+      <strong><%= thread_reminder.icon_name %></strong>
+      <small><%= day_of_week(thread_reminder) %></small>
+      <small><%= thread_reminder.scheduled_time.strftime("%H:%M") %></small>
+      <br>
+      <%= simple_format(h(thread_reminder.message)) %>
+    </div>
+  </div>
+  <div class="media-right">
+    <%#= link_to(tag.span(tag.i(nil, class: 'fas fa-edit'), class: 'icon'), edit_reminder_path(reminder)) %>
+  </div>
+</article>

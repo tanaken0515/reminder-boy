@@ -1,5 +1,6 @@
 class ThreadRemindersController < ApplicationController
-  before_action :set_reminder, only: [:new, :create]
+  before_action :set_reminder, only: [:new, :create, :edit, :update]
+  before_action :set_thread_reminder, only: [:edit, :update]
 
   def new
     @thread_reminder = @reminder.thread_reminders.new
@@ -15,10 +16,25 @@ class ThreadRemindersController < ApplicationController
     end
   end
 
+  def edit
+  end
+
+  def update
+    if @thread_reminder.update(thread_reminder_params)
+      redirect_to reminder_path(@reminder)
+    else
+      render :edit
+    end
+  end
+
   private
 
   def set_reminder
     @reminder = current_user.reminders.find(params[:reminder_id])
+  end
+
+  def set_thread_reminder
+    @thread_reminder = @reminder.thread_reminders.find(params[:id])
   end
 
   def thread_reminder_params

@@ -46,7 +46,8 @@
       </div>
       <% if show_thread_reminders %>
         <%= render(partial: 'thread_reminder',
-                   collection: reminder.thread_reminders, as: :thread_reminder) %>
+                   collection: reminder.thread_reminders, as: :thread_reminder,
+                   locals: {reminder: reminder}) %>
         <br/>
         <nav class="level is-mobile">
           <div class="level-left">

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_30_023213) do
+ActiveRecord::Schema.define(version: 2019_07_07_022213) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,6 +60,27 @@ ActiveRecord::Schema.define(version: 2019_06_30_023213) do
     t.index ["user_id"], name: "index_reminders_on_user_id"
   end
 
+  create_table "thread_reminders", force: :cascade do |t|
+    t.bigint "reminder_id"
+    t.string "icon_emoji"
+    t.string "icon_name"
+    t.string "message", null: false
+    t.time "scheduled_time", default: "2000-01-01 00:00:00", null: false
+    t.boolean "holiday_included", default: false, null: false
+    t.boolean "also_send_to_channel", default: false, null: false
+    t.integer "status", limit: 2, null: false
+    t.boolean "monday_enabled", default: false, null: false
+    t.boolean "tuesday_enabled", default: false, null: false
+    t.boolean "wednesday_enabled", default: false, null: false
+    t.boolean "thursday_enabled", default: false, null: false
+    t.boolean "friday_enabled", default: false, null: false
+    t.boolean "saturday_enabled", default: false, null: false
+    t.boolean "sunday_enabled", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["reminder_id"], name: "index_thread_reminders_on_reminder_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "name", null: false
     t.string "avatar_url"
@@ -72,4 +93,5 @@ ActiveRecord::Schema.define(version: 2019_06_30_023213) do
   add_foreign_key "authentications", "users"
   add_foreign_key "remind_logs", "reminders"
   add_foreign_key "reminders", "users"
+  add_foreign_key "thread_reminders", "reminders"
 end

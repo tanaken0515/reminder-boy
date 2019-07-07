@@ -3,6 +3,7 @@ class Reminder < ApplicationRecord
 
   belongs_to :user
   has_many :remind_logs
+  has_many :thread_reminders
 
   validates :slack_channel_id, presence: true
   validates :message, presence: true

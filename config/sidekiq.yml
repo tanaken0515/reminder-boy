@@ -2,3 +2,6 @@
   periodically_reminds:
     cron: '0 */5 * * * * Asia/Tokyo'
     class: PeriodicallyRemindsWorker
+  periodically_thread_reminds:
+    cron: '0 */5 * * * * Asia/Tokyo'
+    class: PeriodicallyThreadRemindsWorker

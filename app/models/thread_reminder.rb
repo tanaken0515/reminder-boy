@@ -67,6 +67,22 @@ class ThreadReminder < ApplicationRecord
     end
   end
 
+  def remind!
+    response = post
+    return unless response.ok
+
+    default_emoji_url = 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/320/twitter/185/dog-face_1f436.png'
+    params = {
+      slack_channel_id: reminder.slack_channel_id,
+      message: message,
+      icon_emoji: icon_emoji,
+      icon_name: icon_name,
+      slack_message_ts: response.ts,
+      emoji_url: response.dig(:message, :icons, :image_64) || default_emoji_url
+    }
+    thread_remind_logs.create!(params)
+  end
+
   private
 
   def validate_scheduled_time_is_included_in_scheduled_time_list

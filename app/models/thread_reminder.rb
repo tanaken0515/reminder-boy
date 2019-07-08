@@ -43,6 +43,29 @@ class ThreadReminder < ApplicationRecord
     enabled_day_of_weeks == %i(saturday sunday)
   end
 
+  def post
+    if reminder.remind_logs.empty?
+      return {ok: false, error: 'remind logs did not exist.'}
+    end
+
+    params = {
+      channel: reminder.slack_channel_id,
+      text: message,
+      as_user: false,
+      icon_emoji: ":#{icon_emoji}:",
+      username: icon_name,
+      thread_ts: reminder.remind_logs.last.slack_message_ts,
+      reply_broadcast: also_send_to_channel,
+      link_names: true,
+    }
+    begin
+      reminder.user.slack_client.chat_postMessage(params)
+    rescue => e
+      Rails.logger.error e.message
+      {ok: false, error: e.message}
+    end
+  end
+
   private
 
   def validate_scheduled_time_is_included_in_scheduled_time_list

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_07_022213) do
+ActiveRecord::Schema.define(version: 2019_07_08_134739) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,6 +60,20 @@ ActiveRecord::Schema.define(version: 2019_07_07_022213) do
     t.index ["user_id"], name: "index_reminders_on_user_id"
   end
 
+  create_table "thread_remind_logs", force: :cascade do |t|
+    t.bigint "thread_reminder_id"
+    t.string "slack_channel_id", null: false
+    t.string "icon_emoji"
+    t.string "icon_name"
+    t.string "message", null: false
+    t.string "slack_message_ts", null: false
+    t.string "slack_permalink"
+    t.string "emoji_url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["thread_reminder_id"], name: "index_thread_remind_logs_on_thread_reminder_id"
+  end
+
   create_table "thread_reminders", force: :cascade do |t|
     t.bigint "reminder_id"
     t.string "icon_emoji"
@@ -93,5 +107,6 @@ ActiveRecord::Schema.define(version: 2019_07_07_022213) do
   add_foreign_key "authentications", "users"
   add_foreign_key "remind_logs", "reminders"
   add_foreign_key "reminders", "users"
+  add_foreign_key "thread_remind_logs", "thread_reminders"
   add_foreign_key "thread_reminders", "reminders"
 end

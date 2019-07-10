@@ -9,6 +9,9 @@ class User < ApplicationRecord
   enumerize :role, in: {none: 0, admin: 1},
             default: :none, predicates: {prefix: true}, scope: true
 
+  # custom validations
+  validate :validate_time_zone_is_included_in_tzinfo_name_list
+
   def self.create_with!(authentication, user_name)
     ApplicationRecord.transaction do
       user_params = {
@@ -47,5 +50,16 @@ class User < ApplicationRecord
 
   def slack_client
     @client ||= Slack::Web::Client.new(token: latest_authentication.access_token)
+  end
+
+  private
+
+  def validate_time_zone_is_included_in_tzinfo_name_list
+    return if time_zone.nil?
+
+    list = ActiveSupport::TimeZone.all.map{|tz| tz.tzinfo.name}.uniq
+    unless list.include?(time_zone)
+      errors.add(:time_zone, 'is not included in the list')
+    end
   end
 end

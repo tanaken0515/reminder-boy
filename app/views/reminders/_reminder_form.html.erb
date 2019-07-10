@@ -1,11 +1,3 @@
-<% if reminder.errors.present? %>
-  <ul>
-    <% reminder.errors.full_messages.each do |message| %>
-      <li><%= message %></li>
-    <% end %>
-  </ul>
-<% end %>
-
 <%= form_with(model: reminder, local: true) do |f| %>
   <% #チャンネル %>
   <div class="field is-horizontal">
@@ -15,10 +7,13 @@
     <div class="field-body">
       <div class="field">
         <div class="control">
-          <div class="select">
+          <div class="select <%= reminder.errors.include?(:slack_channel_id) ? 'is-danger' : '' %>">
             <%= f.select :slack_channel_id, active_slack_channel_list, include_blank: true %>
           </div>
         </div>
+        <% if reminder.errors.include?(:slack_channel_id) %>
+          <p class="help is-danger"><%= reminder.errors.full_messages_for(:slack_channel_id).join(', ') %></p>
+        <% end %>
       </div>
     </div>
   </div>
@@ -53,10 +48,13 @@
     <div class="field-body">
       <div class="field">
         <div class="control">
-          <div class="select">
+          <div class="select <%= reminder.errors.include?(:scheduled_time) ? 'is-danger' : '' %>">
             <%= f.select :scheduled_time,
                          options_for_select(Reminder.scheduled_time_list, reminder.scheduled_time.try(:strftime, '%H:%M')) %>
           </div>
+          <% if reminder.errors.include?(:scheduled_time) %>
+            <p class="help is-danger"><%= reminder.errors.full_messages_for(:scheduled_time).join(', ') %></p>
+          <% end %>
         </div>
       </div>
     </div>
@@ -98,8 +96,11 @@
     <div class="field-body">
       <div class="field">
         <div class="control">
-          <%= f.text_area :message, class: 'textarea' %>
+          <%= f.text_area :message, class: "textarea #{reminder.errors.include?(:message) ? 'is-danger' : ''}" %>
         </div>
+        <% if reminder.errors.include?(:message) %>
+          <p class="help is-danger"><%= reminder.errors.full_messages_for(:message).join(', ') %></p>
+        <% end %>
       </div>
     </div>
   </div>
@@ -130,9 +131,12 @@
       <div class="field-body">
         <div class="field">
           <div class="control">
-            <div class="select">
+            <div class="select <%= reminder.errors.include?(:status) ? 'is-danger' : '' %>">
               <%= f.select :status, Reminder.status.values %>
             </div>
+            <% if reminder.errors.include?(:status) %>
+              <p class="help is-danger"><%= reminder.errors.full_messages_for(:status).join(', ') %></p>
+            <% end %>
           </div>
         </div>
       </div>

@@ -19,11 +19,14 @@
       <div class="field-body">
         <div class="field">
           <div class="control">
-            <div class="select">
+            <div class="select <%= @user.errors.include?(:time_zone) ? 'is-danger' : '' %>">
               <%= f.select :time_zone,
                            options_for_select(time_zone_options, @user.time_zone),
                            include_blank: true %>
             </div>
+            <% if @user.errors.include?(:time_zone) %>
+              <p class="help is-danger"><%= @user.errors.full_messages_for(:time_zone).join(', ') %></p>
+            <% end %>
           </div>
         </div>
       </div>

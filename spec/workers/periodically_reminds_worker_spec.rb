@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe PeriodicallyRemindsWorker, type: :worker do
   include_context 'make_slack_client_mock_available'
 
-  let(:utc_user) { create(:user_with_authentication, time_zone: 'UTC') }
+  let(:utc_user) { create(:user_with_authentication, time_zone: 'Etc/UTC') }
   let(:jp_user) { create(:user_with_authentication, time_zone: 'Asia/Tokyo') }
 
   before do

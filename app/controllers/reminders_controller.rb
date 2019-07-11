@@ -2,9 +2,9 @@ class RemindersController < ApplicationController
   include RemindersHelper
 
   before_action :set_reminder, only: [:show, :edit, :update, :post_message]
+  before_action :set_reminders, only: :index
 
   def index
-    @reminders = current_user.reminders.from_latest
   end
 
   def new
@@ -52,5 +52,17 @@ class RemindersController < ApplicationController
 
   def set_reminder
     @reminder = current_user.reminders.find(params[:id])
+  end
+
+  def set_reminders
+    @reminders = current_user.reminders.from_latest
+    if @reminders.empty?
+      @reminders = [current_user.reminders.new(
+        slack_channel_id: current_user.slack_channel_list.first.first,
+        icon_name: 'お使いいただきありがとうございます！',
+        message: "まだリマインダーを作っていないようですね。\nNew Reminderボタンでリマインダーを作ってみましょう！",
+        scheduled_time: Time.zone.now,
+      )]
+    end
   end
 end

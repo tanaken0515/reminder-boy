@@ -61,7 +61,7 @@
         </nav>
       <% end %>
     </div>
-    <% if show_links %>
+    <% if show_links and reminder.persisted? %>
       <div class="media-right">
         <%= link_to(tag.span(tag.i(nil, class: 'fas fa-info-circle'), class: 'icon'), reminder_path(reminder)) %>
         <%= link_to(tag.span(tag.i(nil, class: 'fas fa-edit'), class: 'icon'), edit_reminder_path(reminder)) %>

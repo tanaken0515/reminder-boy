@@ -14,8 +14,6 @@
     <div class="level-item">
       <div class="buttons">
         <%= link_to 'Edit', edit_reminder_path(@reminder), class: 'button is-link' %>
-        <%= link_to 'Test Post', post_message_reminder_path(@reminder),
-                    method: :put, remote: true, data: {confirm: "テスト通知をします。よろしいですか？"}, class: 'button is-warning' %>
       </div>
     </div>
   </div>

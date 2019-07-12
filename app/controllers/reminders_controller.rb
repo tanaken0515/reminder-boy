@@ -35,11 +35,6 @@ class RemindersController < ApplicationController
     end
   end
 
-  def post_message
-    TestNoticeWorker.perform_async(@reminder.id)
-    render status: 200, json: {status: 200, message: "Success"}
-  end
-
   private
 
   def reminder_params

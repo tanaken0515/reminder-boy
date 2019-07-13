@@ -1,3 +1,8 @@
+<%= javascript_pack_tag 'emoji_mart' %>
+<div id="picker">
+  <div id="picker-trigger">click!</div>
+  <div id="picker-menu"></div>
+</div>
 <%= form_with(model: reminder, local: true) do |f| %>
   <% #チャンネル %>
   <div class="field is-horizontal">

@@ -34,18 +34,39 @@ class Example extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      native: true,
-      emoji: 'point_up',
-      title: 'Pick your emoji…',
-      custom: CUSTOM_EMOJIS,
+      trigger_elm: 'please click!',
+      menu_class: 'is-hidden',
+      picker: {
+        native: true,
+        emoji: 'point_up',
+        title: 'Pick your emoji…',
+        custom: CUSTOM_EMOJIS,
+      }
     }
   }
 
+  handleTriggerClick() {
+    console.log('click!');
+    this.setState({ trigger_elm: 'target is clicked!', menu_class: '' });
+  }
+
+  handleEmojiSelect(emoji) {
+    console.log(emoji);
+    this.setState({ trigger_elm: emoji.id, menu_class: 'is-hidden' });
+  }
+
   render() {
-    return <Picker
-      {...this.state}
-      onSelect={console.log}
-    />
+    return <div>
+      <div onClick={() => this.handleTriggerClick()}>
+        {this.state.trigger_elm}
+      </div>
+      <div className={this.state.menu_class}>
+        <Picker
+          {...this.state.picker}
+          onSelect={(emoji) => this.handleEmojiSelect(emoji)}
+        />
+      </div>
+    </div>
   }
 }
 
@@ -53,17 +74,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const $emojiPickers = Array.prototype.slice.call(document.querySelectorAll('.emoji-picker'), 0);
 
   if ($emojiPickers.length > 0) {
-
-    $emojiPickers.forEach(el => {
-      const $emojiPickerMenu = el.appendChild(document.createElement('div'));
-      $emojiPickerMenu.classList.add('emoji-picker-menu');
-      $emojiPickerMenu.classList.add('is-hidden');
-      ReactDOM.render(<Example />, $emojiPickerMenu);
-
-      const $emojiPickerTrigger = el.querySelector('.emoji-picker-trigger');
-      $emojiPickerTrigger.addEventListener('click', () => {
-        $emojiPickerMenu.classList.toggle('is-hidden');
-      });
-    });
+    $emojiPickers.forEach(el => { ReactDOM.render(<Example />, el) });
   }
 });

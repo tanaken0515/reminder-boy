@@ -34,7 +34,7 @@ class Example extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      trigger_elm: '',
+      trigger_elm: <i className="far fa-smile"></i>,
       menu_class: 'is-hidden',
       field_value: props.fieldValue,
       picker: {
@@ -58,7 +58,7 @@ class Example extends React.Component {
     return <div>
       <input type="hidden" name={this.props.fieldName} value={this.state.field_value}/>
       <div className='is-size-4'　onClick={() => this.handleTriggerClick()}>
-        {this.state.trigger_elm === '' ? <i className="far fa-smile"></i> : this.state.trigger_elm}
+        {this.state.trigger_elm}
       </div>
       <div className={this.state.menu_class}>
         <Picker

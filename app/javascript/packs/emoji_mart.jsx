@@ -6,12 +6,6 @@ import { Picker } from 'emoji-mart'
 
 const CUSTOM_EMOJIS = [
   {
-    name: 'Party Parrot',
-    short_names: ['parrot'],
-    keywords: ['party'],
-    imageUrl: './images/parrot.gif'
-  },
-  {
     name: 'Octocat',
     short_names: ['octocat'],
     keywords: ['github'],
@@ -34,14 +28,13 @@ const CUSTOM_EMOJIS = [
     sheetColumns: 52,
     sheetRows: 52,
   },
-]
+];
 
 class Example extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       native: true,
-      set: 'native',
       emoji: 'point_up',
       title: 'Pick your emoji…',
       custom: CUSTOM_EMOJIS,
@@ -49,24 +42,28 @@ class Example extends React.Component {
   }
 
   render() {
-    return <div>
-      <div className="row">
-        <Picker
-          {...this.state}
-          onSelect={console.log}
-        />
-      </div>
-    </div>
+    return <Picker
+      {...this.state}
+      onSelect={console.log}
+    />
   }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  const $picker = document.querySelector('#picker')
-  $picker.addEventListener('click', () => {
-    const $pickerMenu = document.querySelector('#picker-menu')
-    if ($pickerMenu.children.length > 0) {
-      $pickerMenu.removeChild($pickerMenu.firstChild)
-    }
-    ReactDOM.render(<Example />, $pickerMenu)
-  })
-})
+  const $emojiPickers = Array.prototype.slice.call(document.querySelectorAll('.emoji-picker'), 0);
+
+  if ($emojiPickers.length > 0) {
+
+    $emojiPickers.forEach(el => {
+      const $emojiPickerMenu = el.appendChild(document.createElement('div'));
+      $emojiPickerMenu.classList.add('emoji-picker-menu');
+      $emojiPickerMenu.classList.add('is-hidden');
+      ReactDOM.render(<Example />, $emojiPickerMenu);
+
+      const $emojiPickerTrigger = el.querySelector('.emoji-picker-trigger');
+      $emojiPickerTrigger.addEventListener('click', () => {
+        $emojiPickerMenu.classList.toggle('is-hidden');
+      });
+    });
+  }
+});

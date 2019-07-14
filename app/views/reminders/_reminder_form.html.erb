@@ -1,5 +1,4 @@
 <%= javascript_pack_tag 'emoji_mart' %>
-<div class="emoji-picker"></div>
 <%= form_with(model: reminder, local: true) do |f| %>
   <% #チャンネル %>
   <div class="field is-horizontal">
@@ -69,15 +68,7 @@
     </div>
     <div class="field-body">
       <div class="field is-narrow">
-        <p class="control has-icons-left">
-          <%= f.text_field :icon_emoji, placeholder: 'emoji', class: 'input', autocomplete: 'on', list: 'slack_emoji_list' %>
-          <datalist id="slack_emoji_list">
-            <%= options_for_select(slack_emoji_list) %>
-          </datalist>
-          <span class="icon is-small is-left">
-            <i class="fas fa-smile"></i>
-          </span>
-        </p>
+        <div class="control emoji-picker" data-field-name="reminder[icon_emoji]" data-field-value=<%= reminder.icon_emoji %>></div>
       </div>
       <div class="field is-narrow">
         <p class="control has-icons-left">

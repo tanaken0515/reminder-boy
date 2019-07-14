@@ -34,8 +34,9 @@ class Example extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      trigger_elm: 'please click!',
+      trigger_elm: '',
       menu_class: 'is-hidden',
+      field_value: props.fieldValue,
       picker: {
         native: true,
         emoji: 'point_up',
@@ -46,19 +47,18 @@ class Example extends React.Component {
   }
 
   handleTriggerClick() {
-    console.log('click!');
-    this.setState({ trigger_elm: 'target is clicked!', menu_class: '' });
+    this.setState({ menu_class: '' });
   }
 
   handleEmojiSelect(emoji) {
-    console.log(emoji);
-    this.setState({ trigger_elm: emoji.id, menu_class: 'is-hidden' });
+    this.setState({ field_value:emoji.id, trigger_elm: emoji.native, menu_class: 'is-hidden' });
   }
 
   render() {
     return <div>
-      <div onClick={() => this.handleTriggerClick()}>
-        {this.state.trigger_elm}
+      <input type="hidden" name={this.props.fieldName} value={this.state.field_value}/>
+      <div className='is-size-4'　onClick={() => this.handleTriggerClick()}>
+        {this.state.trigger_elm === '' ? <i className="far fa-smile"></i> : this.state.trigger_elm}
       </div>
       <div className={this.state.menu_class}>
         <Picker
@@ -74,6 +74,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const $emojiPickers = Array.prototype.slice.call(document.querySelectorAll('.emoji-picker'), 0);
 
   if ($emojiPickers.length > 0) {
-    $emojiPickers.forEach(el => { ReactDOM.render(<Example />, el) });
+    $emojiPickers.forEach(el => {
+      ReactDOM.render(
+        <Example fieldName={el.getAttribute('data-field-name')} fieldValue={el.getAttribute('data-field-value')} />,
+        el
+      );
+    });
   }
 });

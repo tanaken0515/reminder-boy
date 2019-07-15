@@ -36,6 +36,17 @@ module RemindersHelper
     current_user.slack_emoji_list[reminder.icon_emoji] || default_emoji_url
   end
 
+  def custom_emoji_json
+    current_user.slack_emoji_list.map { |k, v|
+      {
+        name: k,
+        short_names: [k],
+        keywords: ['slack'],
+        imageUrl: v
+      }
+    }.to_json
+  end
+
   def css_class_status(reminder)
     if reminder.activated?
       ''

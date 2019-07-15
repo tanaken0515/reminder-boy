@@ -28,6 +28,15 @@ services:
     <<: *web_base
     command: bundle exec sidekiq
     ports: []
+  webpack:
+    <<: *web_base
+    command: bin/webpack-dev-server
+    ports:
+      - "3035:3035"
+    depends_on:
+      - web
+    tty: false
+    stdin_open: false
 
 volumes:
   bundle-volume:

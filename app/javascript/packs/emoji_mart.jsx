@@ -17,17 +17,6 @@ const CUSTOM_EMOJIS = [
     keywords: ['github'],
     imageUrl: 'https://github.githubassets.com/images/icons/emoji/shipit.png'
   },
-  {
-    name: 'Test Flag',
-    short_names: ['test'],
-    keywords: ['test', 'flag'],
-    spriteUrl: 'https://unpkg.com/emoji-datasource-twitter@4.0.4/img/twitter/sheets-256/64.png',
-    sheet_x: 1,
-    sheet_y: 1,
-    size: 64,
-    sheetColumns: 52,
-    sheetRows: 52,
-  },
 ];
 
 class Example extends React.Component {
@@ -36,6 +25,8 @@ class Example extends React.Component {
     this.state = {
       menu_class: 'is-hidden',
       field_value: props.fieldValue,
+      is_custom: props.isCustom,
+      image_url: props.imageUrl,
       picker: {
         native: true,
         emoji: 'point_up',
@@ -50,20 +41,30 @@ class Example extends React.Component {
   }
 
   handleEmojiSelect(emoji) {
-    this.setState({ field_value: emoji.id, menu_class: 'is-hidden' });
+    this.setState({
+      field_value: emoji.id,
+      is_custom: emoji.custom,
+      image_url: emoji.imageUrl,
+      menu_class: 'is-hidden',
+    });
   }
 
   render() {
+    let icon;
+    if(this.state.field_value) {
+      if(this.state.is_custom) {
+        icon = <figure className="image is-32x32"><img src={this.state.image_url} alt={this.state.field_value}></img></figure>;
+      } else {
+        icon = <Emoji emoji={{ id: this.state.field_value }} size={32}/>;
+      }
+    } else {
+      icon = <div className='is-size-4'><i className="far fa-smile"></i></div>;
+    }
+
     return <div>
       <input type="hidden" name={this.props.fieldName} value={this.state.field_value}/>
       <div onClick={() => this.handleTriggerClick()}>
-        <Emoji
-          emoji={{ id: this.state.field_value }}
-          size={32}
-          fallback={(emoji, props) => {
-            return emoji ? `:${emoji.short_names[0]}:` : props.emoji
-          }}
-        />
+        {icon}
       </div>
       <div className={this.state.menu_class}>
         <Picker
@@ -83,7 +84,9 @@ document.addEventListener('DOMContentLoaded', () => {
       ReactDOM.render(
         <Example
           fieldName={el.getAttribute('data-field-name')}
-          fieldValue={el.getAttribute('data-field-value') || 'grinning'}
+          fieldValue={el.getAttribute('data-field-value')}
+          isCustom={el.getAttribute('data-is-custom')}
+          imageUrl={el.getAttribute('data-image-url')}
         />,
         el
       );

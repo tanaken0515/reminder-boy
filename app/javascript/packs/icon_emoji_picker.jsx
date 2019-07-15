@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import 'emoji-mart/css/emoji-mart.css'
 import { Picker, Emoji } from 'emoji-mart'
 
-class Example extends React.Component {
+class IconEmojiPicker extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const customEmojiList = JSON.parse(el.getAttribute('data-custom-emoji-json'));
 
       ReactDOM.render(
-        <Example
+        <IconEmojiPicker
           fieldName={el.getAttribute('data-field-name')}
           fieldValue={el.getAttribute('data-field-value')}
           isCustom={isCustom}

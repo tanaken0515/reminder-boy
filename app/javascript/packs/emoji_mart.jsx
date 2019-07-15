@@ -81,11 +81,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if ($emojiPickers.length > 0) {
     $emojiPickers.forEach(el => {
+      const isCustom = (el.getAttribute('data-is-custom') === 'true');
       ReactDOM.render(
         <Example
           fieldName={el.getAttribute('data-field-name')}
           fieldValue={el.getAttribute('data-field-value')}
-          isCustom={el.getAttribute('data-is-custom')}
+          isCustom={isCustom}
           imageUrl={el.getAttribute('data-image-url')}
         />,
         el

@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import 'emoji-mart/css/emoji-mart.css'
-import { Picker } from 'emoji-mart'
+import { Picker, Emoji } from 'emoji-mart'
 
 const CUSTOM_EMOJIS = [
   {
@@ -34,7 +34,6 @@ class Example extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      trigger_elm: <i className="far fa-smile"></i>,
       menu_class: 'is-hidden',
       field_value: props.fieldValue,
       picker: {
@@ -51,14 +50,20 @@ class Example extends React.Component {
   }
 
   handleEmojiSelect(emoji) {
-    this.setState({ field_value:emoji.id, trigger_elm: emoji.native, menu_class: 'is-hidden' });
+    this.setState({ field_value: emoji.id, menu_class: 'is-hidden' });
   }
 
   render() {
     return <div>
       <input type="hidden" name={this.props.fieldName} value={this.state.field_value}/>
-      <div className='is-size-4'　onClick={() => this.handleTriggerClick()}>
-        {this.state.trigger_elm}
+      <div onClick={() => this.handleTriggerClick()}>
+        <Emoji
+          emoji={{ id: this.state.field_value }}
+          size={32}
+          fallback={(emoji, props) => {
+            return emoji ? `:${emoji.short_names[0]}:` : props.emoji
+          }}
+        />
       </div>
       <div className={this.state.menu_class}>
         <Picker
@@ -76,7 +81,10 @@ document.addEventListener('DOMContentLoaded', () => {
   if ($emojiPickers.length > 0) {
     $emojiPickers.forEach(el => {
       ReactDOM.render(
-        <Example fieldName={el.getAttribute('data-field-name')} fieldValue={el.getAttribute('data-field-value')} />,
+        <Example
+          fieldName={el.getAttribute('data-field-name')}
+          fieldValue={el.getAttribute('data-field-value') || 'grinning'}
+        />,
         el
       );
     });

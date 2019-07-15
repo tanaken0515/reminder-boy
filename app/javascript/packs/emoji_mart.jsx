@@ -4,21 +4,6 @@ import PropTypes from 'prop-types'
 import 'emoji-mart/css/emoji-mart.css'
 import { Picker, Emoji } from 'emoji-mart'
 
-const CUSTOM_EMOJIS = [
-  {
-    name: 'Octocat',
-    short_names: ['octocat'],
-    keywords: ['github'],
-    imageUrl: 'https://github.githubassets.com/images/icons/emoji/octocat.png'
-  },
-  {
-    name: 'Squirrel',
-    short_names: ['shipit', 'squirrel'],
-    keywords: ['github'],
-    imageUrl: 'https://github.githubassets.com/images/icons/emoji/shipit.png'
-  },
-];
-
 class Example extends React.Component {
   constructor(props) {
     super(props);
@@ -31,7 +16,7 @@ class Example extends React.Component {
         native: true,
         emoji: 'point_up',
         title: 'Pick your emoji…',
-        custom: CUSTOM_EMOJIS,
+        custom: props.customEmojiList,
       }
     }
   }
@@ -82,12 +67,15 @@ document.addEventListener('DOMContentLoaded', () => {
   if ($emojiPickers.length > 0) {
     $emojiPickers.forEach(el => {
       const isCustom = (el.getAttribute('data-is-custom') === 'true');
+      const customEmojiList = JSON.parse(el.getAttribute('data-custom-emoji-json'));
+
       ReactDOM.render(
         <Example
           fieldName={el.getAttribute('data-field-name')}
           fieldValue={el.getAttribute('data-field-value')}
           isCustom={isCustom}
           imageUrl={el.getAttribute('data-image-url')}
+          customEmojiList={customEmojiList}
         />,
         el
       );

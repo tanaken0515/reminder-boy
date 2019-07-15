@@ -72,7 +72,9 @@
              data-field-name="reminder[icon_emoji]"
              data-field-value=<%= reminder.icon_emoji %>
              data-is-custom=<%= current_user.slack_emoji_list.member?(reminder.icon_emoji) %>
-             data-image-url=<%= slack_emoji_url(reminder) %>></div>
+             data-image-url=<%= slack_emoji_url(reminder) %>
+             data-custom-emoji-json=<%= custom_emoji_json %>
+        ></div>
       </div>
       <div class="field is-narrow">
         <p class="control has-icons-left">

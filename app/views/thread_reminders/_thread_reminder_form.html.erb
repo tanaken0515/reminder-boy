@@ -1,3 +1,4 @@
+<%= javascript_pack_tag 'icon_emoji_picker' %>
 <%= form_with(model: thread_reminder,
               url: thread_reminder.new_record? ? reminder_thread_reminders_path(reminder) : reminder_thread_reminder_path(reminder, thread_reminder),
               local: true) do |f| %>
@@ -50,15 +51,13 @@
     </div>
     <div class="field-body">
       <div class="field is-narrow">
-        <p class="control has-icons-left">
-          <%= f.text_field :icon_emoji, placeholder: 'emoji', class: 'input', autocomplete: 'on', list: 'slack_emoji_list' %>
-          <datalist id="slack_emoji_list">
-            <%= options_for_select(slack_emoji_list) %>
-          </datalist>
-          <span class="icon is-small is-left">
-            <i class="fas fa-smile"></i>
-          </span>
-        </p>
+        <div class="control emoji-picker"
+             data-field-name="thread_reminder[icon_emoji]"
+             data-field-value="<%= thread_reminder.icon_emoji %>"
+             data-is-custom="<%= current_user.slack_emoji_list.member?(thread_reminder.icon_emoji) %>"
+             data-image-url="<%= slack_emoji_url(thread_reminder) %>"
+             data-custom-emoji-json="<%= custom_emoji_json %>"
+        ></div>
       </div>
       <div class="field is-narrow">
         <p class="control has-icons-left">

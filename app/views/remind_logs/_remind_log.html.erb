@@ -7,9 +7,11 @@
 <div class="box">
   <article class="media">
     <div class="media-left">
-      <figure class="image is-32x32">
-        <%= image_tag(slack_remind_log_emoji_url(remind_log), alt: "emoji_#{remind_log.icon_emoji}") %>
-      </figure>
+      <div class="icon-emoji"
+           data-emoji-value="<%= remind_log.icon_emoji %>"
+           data-is-custom="<%= current_user.slack_emoji_list.member?(remind_log.icon_emoji) %>"
+           data-image-url="<%= slack_remind_log_emoji_url(remind_log) %>"
+      ></div>
     </div>
     <div class="media-content">
       <div class="content">

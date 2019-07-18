@@ -1,8 +1,10 @@
 <article class="media">
   <div class="media-left">
-    <figure class="image is-32x32">
-      <%= image_tag(slack_emoji_url(thread_reminder), alt: "emoji_#{thread_reminder.icon_emoji}") %>
-    </figure>
+    <div class="icon-emoji"
+         data-emoji-value="<%= thread_reminder.icon_emoji %>"
+         data-is-custom="<%= current_user.slack_emoji_list.member?(thread_reminder.icon_emoji) %>"
+         data-image-url="<%= slack_emoji_url(thread_reminder) %>"
+    ></div>
   </div>
   <div class="media-content">
     <div class="content">

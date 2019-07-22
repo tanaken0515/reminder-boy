@@ -1,4 +1,6 @@
-# README
+# Reminder Boy
+
+[![CircleCI](https://circleci.com/gh/tanaken0515/reminder-boy/tree/master.svg?style=svg)](https://circleci.com/gh/tanaken0515/reminder-boy/tree/master)
 
 This README would normally document whatever steps are necessary to get the
 application up and running.

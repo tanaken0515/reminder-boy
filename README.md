@@ -2,25 +2,12 @@
 
 [![CircleCI](https://circleci.com/gh/tanaken0515/reminder-boy/tree/master.svg?style=svg)](https://circleci.com/gh/tanaken0515/reminder-boy/tree/master)
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Get start
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```sh
+$ git clone git@github.com:tanaken0515/reminder-boy.git
+$ cp .env.sample .env
+$ vi .env
+$ docker-compose build
+$ docker-compose run --rm web bundle exec rails db:create db:migrate
+```
